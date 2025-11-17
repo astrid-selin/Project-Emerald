@@ -2,7 +2,8 @@ import type {
 	Card,
 	CardWithCorrespondences,
 	CardsResponse,
-	CardQueryOptions
+	CardQueryOptions,
+	CardDetailWithCorrespondences
 } from './types';
 
 const API_BASE = 'http://localhost:5000';
@@ -70,7 +71,7 @@ export async function getCard(id: number): Promise<Card> {
  * @param id Card number (0-77)
  * @returns Card with correspondences
  */
-export async function getCardWithCorrespondences(id: number): Promise<CardWithCorrespondences> {
+export async function getCardWithCorrespondences(id: number): Promise<CardDetailWithCorrespondences> {
 	const url = `${API_BASE}/cards/${id}/correspondences`;
 
 	try {

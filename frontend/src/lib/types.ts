@@ -52,3 +52,36 @@ export interface CardQueryOptions {
 	suit?: string;
 	element?: string;
 }
+
+// Sephirah Interface (Tree of Life)
+export interface Sephirah {
+	number: number;
+	name: string;
+	hebrew_name: string;
+	divine_name: string;
+	archangel: string;
+	virtue: string;
+	vice: string;
+}
+
+// Card Detail Response with Full Correspondences
+export interface CardDetailWithCorrespondences {
+	card: Card;
+	qabalah_path: {
+		number: number;
+		hebrew_letter: string;
+		letter_meaning: string;
+		from_sephirah_name: string;
+		to_sephirah_name: string;
+		intelligence: string;
+	} | null;
+	connected_sephiroth: {
+		from: Sephirah;
+		to: Sephirah;
+	} | null;
+	astrology: {
+		planet?: string;
+		sign?: string;
+		element?: string;
+	};
+}
