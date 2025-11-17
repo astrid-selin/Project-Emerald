@@ -34,13 +34,21 @@
 		}
 	}
 
-	// Navigation links
+	// Navigation links (for logged-in users)
 	const navLinks = [
 		{ href: '/', label: 'Home' },
 		{ href: '/qabalah', label: 'Qabalah' },
 		{ href: '/cards', label: 'Cards' },
 		{ href: '/learn', label: 'Learn' },
-		{ href: '/journal', label: 'Journal' }
+		{ href: '/journal', label: 'Journal' },
+		{ href: '/about', label: 'About' }
+	];
+
+	// Navigation links for logged-out users
+	const publicNavLinks = [
+		{ href: '/', label: 'Home' },
+		{ href: '/about', label: 'About' },
+		{ href: '/pricing', label: 'Pricing' }
 	];
 
 	// Check if a link is active
@@ -81,7 +89,7 @@
 
 			<!-- Desktop Navigation -->
 			<div class="hidden md:flex items-center gap-6">
-				{#each navLinks as link}
+				{#each ($authStore.user ? navLinks : publicNavLinks) as link}
 					<a
 						href={link.href}
 						class="text-gold hover:text-gold-300 transition-colors relative py-2 {isActive(
@@ -116,18 +124,20 @@
 												{$authStore.user.email}
 											</p>
 										</div>
-										<button
-											class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+										<a
+											href="/"
+											class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
 											onclick={closeUserDropdown}
 										>
-											Profile
-										</button>
-										<button
-											class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+											Dashboard
+										</a>
+										<a
+											href="/settings"
+											class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
 											onclick={closeUserDropdown}
 										>
 											Settings
-										</button>
+										</a>
 										<button
 											class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
 											onclick={handleSignOut}
@@ -157,7 +167,7 @@
 		<!-- Mobile Menu -->
 		{#if menuOpen}
 			<div class="md:hidden mt-4 pb-4 border-t border-gold-700 pt-4">
-				{#each navLinks as link}
+				{#each ($authStore.user ? navLinks : publicNavLinks) as link}
 					<a
 						href={link.href}
 						onclick={closeMenu}
@@ -178,6 +188,13 @@
 							<p class="text-sm text-gold-300 mb-2">Signed in as:</p>
 							<p class="text-gold font-medium truncate">{$authStore.user.email}</p>
 						</div>
+						<a
+							href="/settings"
+							onclick={closeMenu}
+							class="block py-2 text-gold hover:text-gold-300 transition-colors"
+						>
+							Settings
+						</a>
 						<button
 							onclick={handleSignOut}
 							class="block w-full text-left py-2 text-red-400 hover:text-red-300 transition-colors"

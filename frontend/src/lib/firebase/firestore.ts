@@ -27,6 +27,8 @@ export async function addJournalEntry(userId: string, entry: Omit<JournalEntry, 
   };
 
   const docRef = await addDoc(journalCollection(userId), newEntry);
+  // Update streak when adding journal entry
+  await updateStreak(userId);
   return { ...newEntry, id: docRef.id };
 }
 
@@ -88,5 +90,37 @@ export async function completeLesson(userId: string, lessonId: string) {
       lessons_completed: updated,
       last_activity: new Date().toISOString()
     });
+    // Update streak when completing a lesson
+    await updateStreak(userId);
   }
+}
+
+export async function updateStreak(userId: string) {
+  const profile = await getUserProfile(userId);
+  if (!profile) return;
+
+  const today = new Date().toISOString().split('T')[0];
+  const lastActivity = profile.last_activity.split('T')[0];
+
+  const daysDiff = Math.floor(
+    (new Date(today).getTime() - new Date(lastActivity).getTime()) / 86400000
+  );
+
+  let newStreak = profile.streak_days;
+
+  if (daysDiff === 0) {
+    // Same day, no change
+    return;
+  } else if (daysDiff === 1) {
+    // Consecutive day, increment
+    newStreak += 1;
+  } else {
+    // Streak broken, reset
+    newStreak = 1;
+  }
+
+  await updateUserProfile(userId, {
+    streak_days: newStreak,
+    last_activity: new Date().toISOString()
+  });
 }
