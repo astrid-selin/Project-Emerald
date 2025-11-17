@@ -21,10 +21,13 @@ from system_descriptions import (
     GOLDEN_DAWN_DESCRIPTIONS,
     MARSEILLE_DESCRIPTIONS
 )
+from seed_qabalah import seed_sephiroth, seed_paths
+from seed_astrology import seed_planets, seed_zodiac_signs
+from seed_rituals import seed_rituals
 
 
 class TarotDatabaseMigration:
-    def __init__(self, json_file='tarot_data.json', db_file='tarot.db'):
+    def __init__(self, json_file='tarot_data.json', db_file='esoteric_knowledge.db'):
         self.json_file = json_file
         self.db_file = db_file
         self.conn = None
@@ -209,6 +212,29 @@ class TarotDatabaseMigration:
         self.conn.commit()
         print(f"\n✓ Successfully migrated {len(cards)} cards")
 
+        # Seed Qabalah data
+        print("\n" + "-"*60)
+        print("Seeding Qabalah data...")
+        print("-"*60)
+        seed_sephiroth(self.cursor)
+        seed_paths(self.cursor)
+        self.conn.commit()
+
+        # Seed Astrology data
+        print("\n" + "-"*60)
+        print("Seeding Astrology data...")
+        print("-"*60)
+        seed_planets(self.cursor)
+        seed_zodiac_signs(self.cursor)
+        self.conn.commit()
+
+        # Seed Rituals data
+        print("\n" + "-"*60)
+        print("Seeding Rituals data...")
+        print("-"*60)
+        seed_rituals(self.cursor)
+        self.conn.commit()
+
         # Print statistics
         self.print_statistics()
 
@@ -220,12 +246,14 @@ class TarotDatabaseMigration:
 
     def print_statistics(self):
         """Print database statistics"""
-        print("\nDatabase Statistics:")
-        print("-" * 40)
+        print("\n" + "="*60)
+        print("DATABASE STATISTICS")
+        print("="*60)
 
         # Card counts
         self.cursor.execute("SELECT COUNT(*) FROM cards")
         total_cards = self.cursor.fetchone()[0]
+        print(f"\nTarot Cards:")
         print(f"  Total cards: {total_cards}")
 
         self.cursor.execute("SELECT COUNT(*) FROM cards WHERE arcana = 'Major Arcana'")
@@ -254,6 +282,45 @@ class TarotDatabaseMigration:
             )
             count = self.cursor.fetchone()[0]
             print(f"    {system}: {count}")
+
+        # Qabalah counts
+        self.cursor.execute("SELECT COUNT(*) FROM sephiroth")
+        sephiroth_count = self.cursor.fetchone()[0]
+        print(f"\nQabalah:")
+        print(f"  Sephiroth: {sephiroth_count}")
+
+        self.cursor.execute("SELECT COUNT(*) FROM paths")
+        paths_count = self.cursor.fetchone()[0]
+        print(f"  Paths: {paths_count}")
+
+        # Astrology counts
+        self.cursor.execute("SELECT COUNT(*) FROM planets")
+        planets_count = self.cursor.fetchone()[0]
+        print(f"\nAstrology:")
+        print(f"  Planets: {planets_count}")
+
+        self.cursor.execute("SELECT COUNT(*) FROM zodiac_signs")
+        signs_count = self.cursor.fetchone()[0]
+        print(f"  Zodiac signs: {signs_count}")
+
+        # Rituals count
+        self.cursor.execute("SELECT COUNT(*) FROM rituals")
+        rituals_count = self.cursor.fetchone()[0]
+        print(f"\nRituals:")
+        print(f"  Total rituals: {rituals_count}")
+
+        # Rituals by tradition
+        self.cursor.execute("SELECT DISTINCT tradition FROM rituals")
+        traditions = self.cursor.fetchall()
+        for tradition in traditions:
+            self.cursor.execute(
+                "SELECT COUNT(*) FROM rituals WHERE tradition = ?",
+                (tradition[0],)
+            )
+            count = self.cursor.fetchone()[0]
+            print(f"    {tradition[0]}: {count}")
+
+        print("="*60)
 
 
 def main():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-TarotAPI - A comprehensive REST API for fetching tarot cards
-Now with SQLite database, esoteric correspondences, and multi-system descriptions
+Esoteric Knowledge API - A comprehensive REST API for esoteric studies
+Includes Tarot, Qabalah, Astrology, and Ritual practices
 """
 
 from flask import Flask, jsonify, request, g
@@ -9,10 +9,16 @@ import sqlite3
 import os
 import random
 
+# Import blueprints
+from routes.qabalah import qabalah_bp
+from routes.astrology import astrology_bp
+from routes.rituals import rituals_bp
+
 app = Flask(__name__)
 
 # Database configuration
-DATABASE = 'tarot.db'
+DATABASE = 'esoteric_knowledge.db'
+app.config['DATABASE'] = DATABASE
 
 
 def get_db():
@@ -37,6 +43,12 @@ def dict_from_row(row):
     if row is None:
         return None
     return dict(zip(row.keys(), row))
+
+
+# Register blueprints
+app.register_blueprint(qabalah_bp)
+app.register_blueprint(astrology_bp)
+app.register_blueprint(rituals_bp)
 
 
 def get_card_with_details(card_id=None, card_number=None, card_name=None, include_systems=True):
@@ -116,44 +128,63 @@ def get_card_with_details(card_id=None, card_number=None, card_name=None, includ
 def home():
     """Home endpoint with API documentation"""
     return jsonify({
-        'message': 'Welcome to TarotAPI',
-        'description': 'A comprehensive API for fetching tarot cards with esoteric correspondences and multi-system descriptions',
-        'version': '2.0.0',
+        'message': 'Welcome to the Esoteric Knowledge API',
+        'description': 'A comprehensive REST API for esoteric studies including Tarot, Qabalah, Astrology, and Ritual practices',
+        'version': '3.0.0',
         'features': [
-            'Complete 78-card tarot deck',
-            'Qabbalah correspondences (Tree of Life, Hebrew letters, Sephiroth)',
-            'Esoteric associations (musical notes, colors, gemstones, herbs)',
-            'Descriptions from 4 major systems: RWS, Thoth, Golden Dawn, Marseille',
-            'Flexible filtering and search'
+            'Complete 78-card tarot deck with multiple system descriptions',
+            'Tree of Life: 10 Sephiroth and 22 Paths',
+            'Astrological correspondences: Planets and Zodiac Signs',
+            'Esoteric rituals from Golden Dawn and Hermetic traditions',
+            'Cross-referenced correspondences between all systems',
+            'Comprehensive filtering and search capabilities'
         ],
         'endpoints': {
-            '/': 'API documentation (this page)',
-            '/cards': 'Get all tarot cards (supports filtering)',
-            '/cards/<number>': 'Get a specific card by number (0-77)',
-            '/cards/name/<card_name>': 'Get a specific card by name',
-            '/cards/random': 'Get a random card',
-            '/cards/search?q=<query>': 'Search cards by keyword',
-            '/systems': 'List available tarot systems',
-            '/cards/<number>/system/<system_name>': 'Get system-specific description'
-        },
-        'filters': {
-            '/cards': [
-                'arcana=Major Arcana|Minor Arcana',
-                'suit=Wands|Cups|Swords|Pentacles',
-                'element=Fire|Water|Air|Earth',
-                'systems=true|false (include system descriptions, default: true)'
-            ]
+            'tarot': {
+                '/cards': 'Get all tarot cards',
+                '/cards/<number>': 'Get card by number (0-77)',
+                '/cards/name/<name>': 'Get card by name',
+                '/cards/random': 'Get random card',
+                '/cards/search?q=<query>': 'Search cards',
+                '/cards/<number>/correspondences': 'Get card with full qabalah & astrology links',
+                '/systems': 'List tarot systems'
+            },
+            'qabalah': {
+                '/api/qabalah/sephiroth': 'Get all 10 Sephiroth',
+                '/api/qabalah/sephiroth/<number>': 'Get Sephirah by number (1-10)',
+                '/api/qabalah/sephiroth/name/<name>': 'Get Sephirah by name',
+                '/api/qabalah/paths': 'Get all 22 Paths',
+                '/api/qabalah/paths/<number>': 'Get Path by number (11-32)',
+                '/api/qabalah/paths/<number>/card': 'Get Path with full tarot card data',
+                '/api/qabalah/tree': 'Get complete Tree of Life structure'
+            },
+            'astrology': {
+                '/api/astrology/planets': 'Get all planets',
+                '/api/astrology/planets/<name>': 'Get planet by name',
+                '/api/astrology/signs': 'Get all zodiac signs',
+                '/api/astrology/signs/<name>': 'Get sign by name',
+                '/api/astrology/elements': 'Get elemental correspondences',
+                '/api/astrology/modalities': 'Get modality information',
+                '/api/astrology/correspondences': 'Get all astrological correspondences'
+            },
+            'rituals': {
+                '/api/rituals': 'Get all rituals',
+                '/api/rituals/<id>': 'Get ritual by ID',
+                '/api/rituals/name/<name>': 'Get ritual by name or abbreviation',
+                '/api/rituals/beginner': 'Get beginner-friendly rituals',
+                '/api/rituals/daily': 'Get daily practice rituals',
+                '/api/rituals/search?q=<query>': 'Search rituals',
+                '/api/rituals/practice-guide': 'Get practice progression guide'
+            }
         },
         'examples': [
-            '/cards/0',
-            '/cards/name/The Fool',
-            '/cards/name/ace of cups',
-            '/cards?arcana=Major Arcana',
-            '/cards?suit=Cups&element=Water',
-            '/cards/random',
-            '/cards/search?q=love',
-            '/cards/0/system/Thoth',
-            '/systems'
+            '/cards/0/correspondences',
+            '/api/qabalah/tree',
+            '/api/qabalah/paths/11/card',
+            '/api/astrology/planets/Venus',
+            '/api/astrology/signs/Leo',
+            '/api/rituals/name/LBRP',
+            '/api/rituals?difficulty=Beginner'
         ]
     })
 
@@ -377,6 +408,109 @@ def search_cards():
     })
 
 
+@app.route('/cards/<int:number>/correspondences', methods=['GET'])
+def get_card_correspondences(number):
+    """Get a tarot card with full qabalah and astrological correspondences"""
+    db = get_db()
+
+    # Get the card
+    card = get_card_with_details(card_number=number, include_systems=False)
+
+    if not card:
+        return jsonify({
+            'error': f'Card number {number} not found'
+        }), 404
+
+    result = {'card': card}
+
+    # For Major Arcana, get the Path correspondence
+    if card['arcana'] == 'Major Arcana':
+        # Get path that corresponds to this card
+        path_query = """
+            SELECT p.*, s1.name as from_sephirah_name, s2.name as to_sephirah_name
+            FROM paths p
+            LEFT JOIN cards c ON p.tarot_card_id = c.id
+            LEFT JOIN sephiroth s1 ON p.connects_from = s1.number
+            LEFT JOIN sephiroth s2 ON p.connects_to = s2.number
+            WHERE c.number = ?
+        """
+        path = db.execute(path_query, (number,)).fetchone()
+
+        if path:
+            path_dict = dict_from_row(path)
+            # Remove internal IDs
+            if 'id' in path_dict:
+                del path_dict['id']
+            if 'tarot_card_id' in path_dict:
+                del path_dict['tarot_card_id']
+            result['qabalah_path'] = path_dict
+
+            # Get the connected sephiroth details
+            seph_from = db.execute("""
+                SELECT * FROM sephiroth WHERE number = ?
+            """, (path['connects_from'],)).fetchone()
+
+            seph_to = db.execute("""
+                SELECT * FROM sephiroth WHERE number = ?
+            """, (path['connects_to'],)).fetchone()
+
+            result['connected_sephiroth'] = {
+                'from': dict_from_row(seph_from),
+                'to': dict_from_row(seph_to)
+            }
+
+    # Get astrological correspondences
+    astrology_data = {}
+
+    # Check for planetary association
+    if card.get('astrology'):
+        # Try to find matching planet
+        planet = db.execute("""
+            SELECT * FROM planets
+            WHERE LOWER(name) = LOWER(?)
+        """, (card['astrology'],)).fetchone()
+
+        if planet:
+            astrology_data['planet'] = dict_from_row(planet)
+
+    # For cards with zodiac associations, find the sign
+    if card.get('astrology'):
+        sign = db.execute("""
+            SELECT * FROM zodiac_signs
+            WHERE LOWER(name) = LOWER(?)
+        """, (card['astrology'],)).fetchone()
+
+        if sign:
+            sign_dict = dict_from_row(sign)
+            astrology_data['zodiac_sign'] = sign_dict
+
+            # Get ruling planet of the sign
+            if sign['ruling_planet']:
+                ruling_planet = db.execute("""
+                    SELECT * FROM planets WHERE name = ?
+                """, (sign['ruling_planet'],)).fetchone()
+
+                if ruling_planet:
+                    astrology_data['ruling_planet'] = dict_from_row(ruling_planet)
+
+    if astrology_data:
+        result['astrology'] = astrology_data
+
+    # Add element correspondences
+    if card.get('element'):
+        # Get all signs of this element
+        element_signs = db.execute("""
+            SELECT name, symbol, modality FROM zodiac_signs
+            WHERE LOWER(element) = LOWER(?)
+            ORDER BY house_number
+        """, (card['element'],)).fetchall()
+
+        if element_signs:
+            result['elemental_zodiac'] = [dict_from_row(s) for s in element_signs]
+
+    return jsonify(result)
+
+
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors"""
@@ -404,7 +538,7 @@ if __name__ == '__main__':
 
     # Run the Flask development server
     print("="*60)
-    print("TarotAPI v2.0 - SQLite Edition")
+    print("Esoteric Knowledge API v3.0")
     print("="*60)
     print(f"Database: {DATABASE}")
     print("Server starting on http://0.0.0.0:5000")

@@ -1,42 +1,51 @@
-# TarotAPI v2.0
+# Esoteric Knowledge API v3.0
 
-A comprehensive REST API for fetching tarot cards with extensive esoteric correspondences and multi-system descriptions. Built with Python, Flask, and SQLite.
+A comprehensive REST API for esoteric studies including Tarot, Qabalah, Astrology, and Ritual practices. Built with Python, Flask, and SQLite.
 
 ## Features
 
 ### Complete Tarot Deck
 - Full deck of 78 tarot cards (22 Major Arcana + 56 Minor Arcana)
-- SQLite database for efficient querying and filtering
+- Multi-system descriptions (RWS, Thoth, Golden Dawn, Marseille)
+- Rich esoteric correspondences (Qabalah, astrology, elements, colors, gemstones, herbs)
 
-### Rich Card Data
-Each card includes:
-- **Basic Information**: Name, number, arcana type, suit
-- **Traditional Correspondences**: Element, astrological associations, astrological decans
-- **Qabbalah**: Hebrew letters, Tree of Life paths, Sephiroth
-- **Esoteric Associations**: Musical notes, colors (primary & secondary), gemstones, herbs
-- **Symbolism**: Key symbols and imagery
-- **Meanings**: Keywords, upright meanings, reversed meanings, descriptions
+### Hermetic Qabalah
+- **10 Sephiroth** on the Tree of Life with complete correspondences
+  - Divine names, archangels, angelic orders
+  - Four-world color scales (Atziluth, Briah, Yetzirah, Assiah)
+  - Virtues, vices, spiritual experiences
+- **22 Paths** connecting the Sephiroth
+  - Hebrew letters and their meanings
+  - Direct links to Major Arcana cards
+  - Elemental, planetary, and zodiacal associations
 
-### Multi-System Descriptions
-Descriptions from four major tarot traditions:
-- **Rider-Waite-Smith (RWS)**: The most popular modern tarot system (1909)
-- **Thoth**: Aleister Crowley & Lady Frieda Harris's esoteric deck (1969)
-- **Golden Dawn**: Hermetic Order of the Golden Dawn's ceremonial system
-- **Marseille**: Traditional European tarot (pre-1700s)
+### Western Astrology
+- **7 Classical Planets** (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn)
+  - Planetary rulerships, exaltations, detriments, and falls
+  - Sephirothic correspondences
+  - Metals, colors, gemstones, magical powers
+- **12 Zodiac Signs**
+  - Elements (Fire, Earth, Air, Water) and modalities (Cardinal, Fixed, Mutable)
+  - Planetary rulerships and dignities
+  - Tarot correspondences
 
-Each system provides:
-- Specific card descriptions
-- Upright and reversed meanings
-- Key imagery
-- Divinatory meanings
-- Esoteric interpretations
+### Esoteric Rituals
+- **7 Golden Dawn Rituals** from beginner to expert level
+  - Lesser Banishing Ritual of the Pentagram (LBRP)
+  - Middle Pillar Ritual (MPR)
+  - Banishing/Invoking Rituals of the Hexagram (BRH/IRH)
+  - Rose Cross Ritual (RC)
+  - Opening by Watchtower (OWT)
+- Complete instructions, visualizations, and words of power
+- Difficulty ratings and practice progression guidance
 
-### Flexible API
-- Multiple query methods (by number, name, random)
-- Advanced filtering (arcana, suit, element)
-- Full-text search across all fields
-- Optional inclusion/exclusion of system descriptions
-- System-specific endpoint for focused queries
+### Cross-Referenced System
+All correspondences are interconnected:
+- Major Arcana cards linked to Tree of Life paths
+- Paths connected to Sephiroth
+- Sephiroth associated with planets
+- Planets ruling zodiac signs
+- Signs corresponding to tarot cards
 
 ## Installation
 
@@ -56,7 +65,13 @@ pip install -r requirements.txt
 python3 migrate_to_sqlite.py
 ```
 
-This will create `tarot.db` with all card data and correspondences.
+This will create `esoteric_knowledge.db` with:
+- 78 tarot cards with system descriptions
+- 10 Sephiroth
+- 22 Paths
+- 7 Planets
+- 12 Zodiac Signs
+- 7 Rituals
 
 ## Usage
 
@@ -67,276 +82,360 @@ python3 app.py
 
 The API will be available at `http://localhost:5000`
 
-Visit `http://localhost:5000/` in your browser for interactive API documentation.
+Visit `http://localhost:5000/` for interactive API documentation.
 
 ## API Endpoints
 
-### Get API Documentation
-```
-GET /
-```
-Returns comprehensive API information and available endpoints.
+### Tarot Cards
 
-### Get All Cards
+#### Get All Cards
 ```
 GET /cards
 ```
-Returns all 78 tarot cards.
-
 **Query Parameters:**
 - `arcana` - Filter by "Major Arcana" or "Minor Arcana"
-- `suit` - Filter by suit: "Wands", "Cups", "Swords", or "Pentacles"
-- `element` - Filter by element: "Fire", "Water", "Air", or "Earth"
+- `suit` - Filter by "Wands", "Cups", "Swords", "Pentacles"
+- `element` - Filter by "Fire", "Water", "Air", "Earth"
 - `systems` - Include system descriptions: "true" (default) or "false"
 
 **Examples:**
 ```bash
 GET /cards?arcana=Major Arcana
-GET /cards?suit=Cups
-GET /cards?element=Fire
 GET /cards?suit=Cups&element=Water
-GET /cards?systems=false  # Exclude system descriptions for smaller payload
+GET /cards?systems=false
 ```
 
-### Get Card by Number
+#### Get Card by Number
 ```
 GET /cards/<number>
 ```
-Returns a specific card by its number (0-77).
-
-**Query Parameters:**
-- `systems` - Include system descriptions: "true" (default) or "false"
+Returns a specific card by number (0-77).
 
 **Examples:**
 ```bash
 GET /cards/0           # The Fool
 GET /cards/13          # Death
-GET /cards/36          # Ace of Cups
-GET /cards/0?systems=false
 ```
 
-### Get Card by Name
+#### Get Card by Name
 ```
 GET /cards/name/<card_name>
 ```
-Returns a specific card by its name (case-insensitive).
-
-**Query Parameters:**
-- `systems` - Include system descriptions: "true" (default) or "false"
+Case-insensitive card lookup.
 
 **Examples:**
 ```bash
 GET /cards/name/The Fool
-GET /cards/name/the fool
-GET /cards/name/Ace of Cups
-GET /cards/name/queen of swords
+GET /cards/name/ace of cups
 ```
 
-### Get Random Card
+#### Get Card with Full Correspondences
 ```
-GET /cards/random
+GET /cards/<number>/correspondences
 ```
-Returns a random tarot card.
+Returns card with complete Qabalah and astrological cross-references.
 
-**Query Parameters:**
-- `systems` - Include system descriptions: "true" (default) or "false"
+**Example Response for The Fool:**
+```json
+{
+  "card": { ... },
+  "qabalah_path": {
+    "number": 11,
+    "hebrew_letter": "Aleph",
+    "from_sephirah_name": "Kether",
+    "to_sephirah_name": "Chokmah",
+    ...
+  },
+  "connected_sephiroth": {
+    "from": { "name": "Kether", ... },
+    "to": { "name": "Chokmah", ... }
+  },
+  "astrology": { ... }
+}
+```
 
-### Search Cards
+#### Search Cards
 ```
 GET /cards/search?q=<query>
 ```
-Search cards across multiple fields including name, keywords, meanings, correspondences (elements, Hebrew letters, colors, gemstones, etc.).
-
-**Query Parameters:**
-- `q` - Search query (required)
-- `systems` - Include system descriptions: "true" (default) or "false"
+Search across all card fields.
 
 **Examples:**
 ```bash
 GET /cards/search?q=love
-GET /cards/search?q=aleph          # Search by Hebrew letter
-GET /cards/search?q=topaz          # Search by gemstone
-GET /cards/search?q=mercury        # Search by astrological association
+GET /cards/search?q=aleph
+GET /cards/search?q=mars
 ```
 
-### List Available Systems
+#### Other Card Endpoints
 ```
-GET /systems
+GET /cards/random              # Random card
+GET /systems                   # List tarot systems
+GET /cards/<number>/system/<name>  # System-specific description
 ```
-Returns a list of all available tarot systems with card counts.
 
-### Get System-Specific Description
-```
-GET /cards/<number>/system/<system_name>
-```
-Returns a specific card's description from a particular tarot system.
+### Qabalah
 
-**Valid system names:** `RWS`, `Thoth`, `Golden Dawn`, `Marseille`
+#### Sephiroth Endpoints
+```
+GET /api/qabalah/sephiroth              # All 10 Sephiroth
+GET /api/qabalah/sephiroth/<number>     # Sephirah by number (1-10)
+GET /api/qabalah/sephiroth/name/<name>  # Sephirah by name
+```
 
 **Examples:**
 ```bash
-GET /cards/0/system/Thoth
-GET /cards/0/system/RWS
-GET /cards/13/system/Golden Dawn
+GET /api/qabalah/sephiroth/1                # Kether
+GET /api/qabalah/sephiroth/name/Tiphareth   # Tiphareth (Beauty)
 ```
 
-## Example Responses
-
-### Full Card Response (with all systems)
-```json
-{
-  "number": 0,
-  "name": "The Fool",
-  "arcana": "Major Arcana",
-  "suit": null,
-  "element": "Air",
-  "astrology": "Uranus",
-  "hebrew_letter": "Aleph",
-  "tree_of_life_path": "11 (Kether to Chokmah)",
-  "musical_note": "E",
-  "color_primary": "Bright pale yellow",
-  "color_secondary": "Sky blue",
-  "gemstone": "Topaz",
-  "herb": "Aspen, Ginseng",
-  "key_symbols": "Dog, white rose, cliff, sun, mountains, bundle",
-  "keywords": ["beginnings", "innocence", "spontaneity", "free spirit", "adventure"],
-  "upright_meaning": "New beginnings, innocence, spontaneity, a free spirit, taking a leap of faith",
-  "reversed_meaning": "Recklessness, taking risks, lack of direction, naivety, poor judgment",
-  "description": "The Fool represents new beginnings and adventures...",
-  "system_descriptions": {
-    "RWS": {
-      "description": "A young man in colorful garments stands at the edge of a precipice...",
-      "upright_meaning": "New beginnings, adventure, innocence...",
-      "reversed_meaning": "Naivety, foolishness, recklessness...",
-      "key_imagery": "White rose (purity), precipice (unknown)...",
-      "divinatory_meaning": "Folly, mania, extravagance...",
-      "esoteric_meaning": "The spirit in search of experience..."
-    },
-    "Thoth": { ... },
-    "Golden Dawn": { ... },
-    "Marseille": { ... }
-  }
-}
+#### Paths Endpoints
+```
+GET /api/qabalah/paths                  # All 22 Paths
+GET /api/qabalah/paths/<number>         # Path by number (11-32)
+GET /api/qabalah/paths/<number>/card    # Path with full tarot card
 ```
 
-### Compact Response (systems=false)
-```json
-{
-  "number": 0,
-  "name": "The Fool",
-  "arcana": "Major Arcana",
-  "element": "Air",
-  "astrology": "Uranus",
-  "hebrew_letter": "Aleph",
-  "tree_of_life_path": "11 (Kether to Chokmah)",
-  "musical_note": "E",
-  "color_primary": "Bright pale yellow",
-  "gemstone": "Topaz",
-  "keywords": ["beginnings", "innocence", "spontaneity"],
-  "upright_meaning": "New beginnings, innocence, spontaneity...",
-  "reversed_meaning": "Recklessness, taking risks..."
-}
-```
-
-## Testing the API
-
-Using curl:
-
+**Examples:**
 ```bash
-# Get API documentation
-curl http://localhost:5000/
+GET /api/qabalah/paths/11              # Path of Aleph (The Fool)
+GET /api/qabalah/paths/11/card         # Path with complete Fool card data
+```
 
-# Get all cards (without system descriptions for faster response)
-curl http://localhost:5000/cards?systems=false
+#### Tree of Life
+```
+GET /api/qabalah/tree
+```
+Returns complete Tree of Life structure with all Sephiroth and Paths.
 
-# Get The Fool with all system descriptions
-curl http://localhost:5000/cards/0
+### Astrology
 
-# Get The Fool with only Thoth description
-curl http://localhost:5000/cards/0/system/Thoth
+#### Planets
+```
+GET /api/astrology/planets              # All planets
+GET /api/astrology/planets/<name>       # Specific planet
+```
 
-# Get a random card
-curl http://localhost:5000/cards/random
+**Examples:**
+```bash
+GET /api/astrology/planets
+GET /api/astrology/planets/Venus
+GET /api/astrology/planets/Jupiter
+```
 
-# Search by esoteric correspondence
-curl http://localhost:5000/cards/search?q=aleph
-curl http://localhost:5000/cards/search?q=topaz
+#### Zodiac Signs
+```
+GET /api/astrology/signs                # All 12 signs
+GET /api/astrology/signs/<name>         # Specific sign
+```
 
-# Filter Major Arcana
-curl http://localhost:5000/cards?arcana=Major%20Arcana
+**Query Parameters for /signs:**
+- `element` - Filter by "Fire", "Earth", "Air", "Water"
+- `modality` - Filter by "Cardinal", "Fixed", "Mutable"
 
-# List available systems
-curl http://localhost:5000/systems
+**Examples:**
+```bash
+GET /api/astrology/signs
+GET /api/astrology/signs/Leo
+GET /api/astrology/signs?element=Fire
+GET /api/astrology/signs?modality=Cardinal
+```
+
+#### Astrological Correspondences
+```
+GET /api/astrology/elements             # Four elements with signs
+GET /api/astrology/modalities           # Three modalities
+GET /api/astrology/correspondences      # Complete summary
+GET /api/astrology/planetary-hours      # Planetary hours info
+```
+
+### Rituals
+
+#### Get Rituals
+```
+GET /api/rituals                        # All rituals
+GET /api/rituals/<id>                   # Ritual by ID
+GET /api/rituals/name/<name>            # By name or abbreviation
+```
+
+**Query Parameters for /api/rituals:**
+- `tradition` - Filter by tradition (e.g., "Golden Dawn")
+- `category` - Filter by category (e.g., "Banishing", "Invoking")
+- `difficulty` - Filter by "Beginner", "Intermediate", "Advanced", "Expert"
+- `instructions` - Include full instructions: "true" (default) or "false"
+
+**Examples:**
+```bash
+GET /api/rituals?difficulty=Beginner
+GET /api/rituals?category=Banishing
+GET /api/rituals/name/LBRP             # Lesser Banishing Ritual of the Pentagram
+GET /api/rituals/name/Middle Pillar
+```
+
+#### Ritual Categories & Guides
+```
+GET /api/rituals/traditions             # List all traditions
+GET /api/rituals/categories             # List all categories
+GET /api/rituals/beginner               # Beginner-friendly rituals
+GET /api/rituals/daily                  # Daily practice rituals
+GET /api/rituals/practice-guide         # Suggested progression
+```
+
+#### Search Rituals
+```
+GET /api/rituals/search?q=<query>
+GET /api/rituals/by-planet/<planet>
+GET /api/rituals/by-element/<element>
+```
+
+**Examples:**
+```bash
+GET /api/rituals/search?q=banishing
+GET /api/rituals/by-element/Fire
+```
+
+## Example Use Cases
+
+### 1. Study a Major Arcana Card with Full Context
+```bash
+# Get The Emperor with all correspondences
+curl http://localhost:5000/cards/4/correspondences
+```
+
+This returns:
+- Full card details
+- Qabalah path (Path of Heh, connecting Chokmah to Tiphareth)
+- Connected Sephiroth (Wisdom and Beauty)
+- Astrological association (Aries)
+- Ruling planet (Mars)
+- Elemental correspondences
+
+### 2. Explore the Tree of Life
+```bash
+# Get complete Tree structure
+curl http://localhost:5000/api/qabalah/tree
+
+# Deep dive into a specific Sephirah
+curl http://localhost:5000/api/qabalah/sephiroth/6  # Tiphareth
+
+# Study a Path and its tarot card
+curl http://localhost:5000/api/qabalah/paths/15/card  # The Emperor
+```
+
+### 3. Plan Astrological Magic
+```bash
+# Get Venus correspondences for love magic
+curl http://localhost:5000/api/astrology/planets/Venus
+
+# Find all Fire signs for energy work
+curl http://localhost:5000/api/astrology/signs?element=Fire
+
+# Get planetary hours information
+curl http://localhost:5000/api/astrology/planetary-hours
+```
+
+### 4. Build a Daily Practice
+```bash
+# Get beginner rituals to start with
+curl http://localhost:5000/api/rituals/beginner
+
+# Get the LBRP with full instructions
+curl http://localhost:5000/api/rituals/name/LBRP
+
+# Get practice progression guide
+curl http://localhost:5000/api/rituals/practice-guide
+
+# Find daily practice rituals under 25 minutes
+curl http://localhost:5000/api/rituals/daily
+```
+
+### 5. Cross-Reference Systems
+```bash
+# Find which zodiac sign corresponds to The Emperor
+curl http://localhost:5000/cards/4/correspondences
+
+# Find all tarot cards associated with Venus
+curl http://localhost:5000/cards/search?q=Venus
+
+# See which Sephirah corresponds to the Sun
+curl http://localhost:5000/api/astrology/planets/Sun
 ```
 
 ## Database Schema
 
-The SQLite database consists of three main tables:
+The SQLite database (`esoteric_knowledge.db`) contains:
 
-### cards
-Stores all card information including base data and esoteric correspondences.
+### Tarot Tables
+- **cards** - All 78 tarot cards with esoteric correspondences
+- **keywords** - Card keywords (many-to-many)
+- **system_descriptions** - Multi-system interpretations
 
-### keywords
-Many-to-many relationship storing keywords for each card.
+### Qabalah Tables
+- **sephiroth** - 10 Sephiroth on the Tree of Life
+- **paths** - 22 Paths with Hebrew letters and tarot links
 
-### system_descriptions
-Stores system-specific descriptions from RWS, Thoth, Golden Dawn, and Marseille.
+### Astrology Tables
+- **planets** - 7 classical planets with correspondences
+- **zodiac_signs** - 12 signs with elements and modalities
+- **lunar_mansions** - 28 lunar stations (schema ready, data pending)
 
-To rebuild the database from scratch:
-```bash
-python3 migrate_to_sqlite.py
-```
+### Rituals Table
+- **rituals** - Esoteric rituals with full instructions
 
 ## Project Structure
 
 ```
 TarotAPI/
-├── app.py                      # Flask REST API application
-├── tarot_data.json             # Original JSON card data
-├── tarot.db                    # SQLite database (created by migration)
-├── schema.sql                  # Database schema definition
-├── migrate_to_sqlite.py        # Migration script
-├── card_correspondences.py     # Esoteric correspondences data
-├── system_descriptions.py      # Multi-system descriptions data
-├── requirements.txt            # Python dependencies
-└── README.md                   # This file
+├── app.py                      # Main Flask application
+├── routes/                     # API route blueprints
+│   ├── __init__.py
+│   ├── qabalah.py             # Qabalah endpoints
+│   ├── astrology.py           # Astrology endpoints
+│   └── rituals.py             # Rituals endpoints
+├── esoteric_knowledge.db       # SQLite database
+├── schema.sql                  # Database schema
+├── migrate_to_sqlite.py        # Database migration script
+├── seed_qabalah.py            # Qabalah seed data
+├── seed_astrology.py          # Astrology seed data
+├── seed_rituals.py            # Rituals seed data
+├── card_correspondences.py     # Tarot correspondences
+├── system_descriptions.py      # Multi-system descriptions
+├── tarot_data.json            # Original card data
+├── requirements.txt           # Python dependencies
+└── README.md                  # This file
 ```
 
 ## Data Sources & Attributions
 
-The tarot correspondences and system descriptions are based on traditional esoteric sources:
+### Tarot
+- **RWS**: Arthur Edward Waite's "The Pictorial Key to the Tarot" (1910)
+- **Thoth**: Aleister Crowley's "The Book of Thoth" (1944)
+- **Golden Dawn**: Hermetic Order of the Golden Dawn teachings
+- **Marseille**: Traditional Tarot de Marseille
 
-- **Qabbalah Correspondences**: Based on Golden Dawn and Hermetic Qabalah traditions
-- **RWS Descriptions**: Based on Arthur Edward Waite's "The Pictorial Key to the Tarot" (1910)
-- **Thoth Descriptions**: Based on Aleister Crowley's "The Book of Thoth" (1944)
-- **Golden Dawn**: Based on the Hermetic Order of the Golden Dawn's teachings
-- **Marseille**: Based on traditional Tarot de Marseille interpretations
+### Qabalah
+- Based on Golden Dawn and traditional Hermetic Qabalah
+- Sephiroth correspondences from "777" by Aleister Crowley
+- Path attributions following Golden Dawn system
 
-## Frontend Integration
+### Astrology
+- Traditional Western/Hermetic astrology
+- Planetary dignities and correspondences
+- Integration with Qabalah via Sephirothic associations
 
-The API is designed to be easily consumed by frontend applications. The `systems` parameter allows you to control payload size:
-
-- Use `systems=true` for detailed study applications showing multiple interpretations
-- Use `systems=false` for quick reference or mobile applications
-- Use the `/cards/<number>/system/<system_name>` endpoint for system-specific views
-
-## Future Enhancements
-
-Potential future additions:
-- Complete system descriptions for all 78 cards (currently 5 Major Arcana per system)
-- Additional tarot systems (Visconti-Sforza, Egyptian, etc.)
-- Spread endpoints for multi-card readings
-- Card relationships and dignities
-- Numerology correspondences
-- Historical notes and variations
+### Rituals
+- Golden Dawn ritual corpus
+- Based on Israel Regardie's "The Golden Dawn" (1937)
+- Ceremonial magic practices from Hermetic tradition
 
 ## Contributing
 
-Contributions are welcome! Areas where help is particularly appreciated:
-- Completing system descriptions for all 78 cards
-- Adding descriptions from additional tarot systems
-- Improving esoteric correspondences accuracy
-- Additional API endpoints
+Contributions welcome! Priority areas:
+- Complete system descriptions for all 78 cards
+- Additional ritual traditions (Thelema, Chaos Magic, etc.)
+- Lunar mansions data
+- Enhanced cross-reference queries
+- Frontend examples
 
 ## License
 
@@ -344,16 +443,26 @@ MIT
 
 ## Version History
 
-### v2.0.0 (Current)
+### v3.0.0 (Current)
+- **MAJOR EXPANSION**: Renamed to Esoteric Knowledge API
+- Added complete Hermetic Qabalah system (10 Sephiroth, 22 Paths)
+- Added Western Astrology (7 Planets, 12 Zodiac Signs)
+- Added 7 Golden Dawn rituals with full instructions
+- New blueprint-based architecture for routes
+- Cross-reference endpoint linking all systems
+- Renamed database from `tarot.db` to `esoteric_knowledge.db`
+- 30+ new API endpoints across Qabalah, Astrology, and Rituals
+
+### v2.0.0
 - Migrated from JSON to SQLite database
-- Added comprehensive Qabbalah correspondences
-- Added esoteric associations (musical notes, colors, gemstones, herbs)
+- Added comprehensive Qabalah correspondences to cards
 - Added multi-system descriptions (RWS, Thoth, Golden Dawn, Marseille)
-- New endpoints: `/systems`, `/cards/<number>/system/<system_name>`
-- Enhanced search across all fields including correspondences
-- Optional system descriptions via `systems` parameter
+- Enhanced search and filtering
 
 ### v1.0.0
-- Initial release with JSON-based data
-- Basic card information and meanings
-- Simple REST endpoints
+- Initial release with JSON-based tarot data
+- Basic REST endpoints for cards
+
+---
+
+**Note**: This is a living API focused on traditional Western esoteric systems. While rooted in historical sources, it's designed for study, education, and practical application in modern esoteric practice.
