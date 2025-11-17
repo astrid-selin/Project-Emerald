@@ -112,3 +112,39 @@ export interface CardDetailWithCorrespondences {
 		element?: string;
 	};
 }
+
+// Lesson System Types
+export interface Lesson {
+	id: string;
+	title: string;
+	grade: string;
+	grade_name: string;
+	sephirah_context: string;
+	order: number;
+	estimated_time: number; // minutes
+	content: LessonContent;
+	quiz: QuizQuestion[];
+	unlocks_after_days: number;
+	is_free: boolean;
+}
+
+export interface LessonContent {
+	theory: string;
+	practice: string;
+	meditation?: string;
+	references?: string[];
+}
+
+export interface QuizQuestion {
+	question: string;
+	answers: string[];
+	correct: number; // index of correct answer
+	explanation: string;
+}
+
+export interface UserProgress {
+	lessons_completed: string[];
+	current_grade: string;
+	streak_days: number;
+	last_activity: string;
+}
