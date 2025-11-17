@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getCards } from '$lib/api';
-	import type { Card } from '$lib/types';
+	import type { Card as CardType } from '$lib/types';
+	import Card from '$lib/components/Card.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
-	let cards = $state<Card[]>([]);
+	let cards = $state<CardType[]>([]);
 	let loading = $state(true);
 	let error = $state<string | null>(null);
 
@@ -32,11 +35,9 @@
 
 	<!-- Loading State -->
 	{#if loading}
-		<div class="flex items-center justify-center py-20">
-			<div class="text-center">
-				<div class="animate-spin rounded-full h-16 w-16 border-4 border-emerald border-t-transparent mb-4 mx-auto"></div>
-				<p class="text-charcoal/70">Loading cards...</p>
-			</div>
+		<div class="flex flex-col items-center justify-center py-20">
+			<LoadingSpinner size="lg" />
+			<p class="text-charcoal/70 mt-4">Loading cards...</p>
 		</div>
 	{/if}
 
@@ -55,21 +56,22 @@
 	{#if !loading && !error && cards.length > 0}
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 			{#each cards as card}
-				<a
-					href="/cards/{card.number}"
-					class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-charcoal/10 hover:border-emerald/50 group"
-				>
-					<div class="p-6">
+				<a href="/cards/{card.number}" class="block group">
+					<Card hover={true} padding="md" border="none">
 						<!-- Card Number Badge -->
 						<div class="flex items-center justify-between mb-3">
-							<span class="text-xs font-semibold text-cream bg-charcoal px-3 py-1 rounded-full">
-								{card.arcana === 'Major Arcana' ? 'Major' : card.suit || 'Minor'}
-							</span>
+							<Badge
+								text={card.arcana === 'Major Arcana' ? 'Major' : card.suit || 'Minor'}
+								color="gray"
+								size="sm"
+							/>
 							<span class="text-xs text-charcoal/50 font-mono">#{card.number}</span>
 						</div>
 
 						<!-- Card Name -->
-						<h3 class="text-xl font-bold text-charcoal mb-2 group-hover:text-emerald transition-colors">
+						<h3
+							class="text-xl font-bold text-charcoal mb-2 group-hover:text-emerald transition-colors"
+						>
 							{card.name}
 						</h3>
 
@@ -85,20 +87,18 @@
 						{#if card.keywords && card.keywords.length > 0}
 							<div class="flex flex-wrap gap-2">
 								{#each card.keywords.slice(0, 3) as keyword}
-									<span class="text-xs bg-emerald/10 text-emerald px-2 py-1 rounded">
-										{keyword}
-									</span>
+									<Badge text={keyword} color="emerald" size="sm" />
 								{/each}
 							</div>
 						{/if}
-					</div>
 
-					<!-- Hover Effect Footer -->
-					<div class="bg-emerald/5 px-6 py-3 border-t border-emerald/10">
-						<span class="text-sm text-emerald font-medium group-hover:underline">
-							View Details →
-						</span>
-					</div>
+						<!-- View Details -->
+						<div class="mt-4 pt-3 border-t border-emerald/10">
+							<span class="text-sm text-emerald font-medium group-hover:underline">
+								View Details →
+							</span>
+						</div>
+					</Card>
 				</a>
 			{/each}
 		</div>

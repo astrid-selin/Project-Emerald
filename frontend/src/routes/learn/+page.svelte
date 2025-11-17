@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { mockLessons } from '$lib/data/mockLessons';
 	import type { Lesson } from '$lib/types';
+	import Card from '$lib/components/Card.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let lessons = $state<Lesson[]>(mockLessons);
 	let completedLessons = $state<string[]>([]);
@@ -39,7 +42,7 @@
 	</div>
 
 	<!-- Progress Overview -->
-	<div class="bg-emerald/10 border border-emerald/20 rounded-lg p-6 mb-8">
+	<Card padding="md" border="emerald" background="cream">
 		<div class="flex items-center justify-between">
 			<div>
 				<h3 class="text-xl font-bold text-charcoal mb-1">Your Progress</h3>
@@ -61,7 +64,7 @@
 				style="width: {(completedLessons.length / lessons.length) * 100}%"
 			></div>
 		</div>
-	</div>
+	</Card>
 
 	<!-- Lessons List -->
 	<div class="space-y-4">
@@ -115,9 +118,7 @@
 
 							<!-- Grade Badge & Time -->
 							<div class="flex items-center gap-3 ml-13 mb-2">
-								<span class="text-xs font-semibold text-gold bg-gold/10 px-3 py-1 rounded-full">
-									{lesson.grade_name} ({lesson.grade})
-								</span>
+								<Badge text="{lesson.grade_name} ({lesson.grade})" color="gold" size="sm" />
 								<span class="text-sm text-charcoal/70 flex items-center gap-1">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
@@ -130,11 +131,7 @@
 									{lesson.estimated_time} min
 								</span>
 								{#if lesson.is_free}
-									<span
-										class="text-xs font-semibold text-emerald bg-emerald/10 px-2 py-1 rounded-full"
-									>
-										Free
-									</span>
+									<Badge text="Free" color="emerald" size="sm" />
 								{/if}
 							</div>
 
@@ -181,11 +178,7 @@
 									<p class="text-xs text-emerald">Review</p>
 								</div>
 							{:else}
-								<button
-									class="px-6 py-2 bg-emerald text-white font-medium rounded-lg hover:bg-emerald/90 transition-colors"
-								>
-									Start
-								</button>
+								<Button variant="primary" size="md">Start</Button>
 							{/if}
 						</div>
 					</div>
@@ -204,12 +197,12 @@
 	</div>
 
 	<!-- Footer Note -->
-	<div class="mt-8 p-6 bg-gold/10 border border-gold/20 rounded-lg">
+	<Card padding="md" border="gold" background="cream">
 		<h3 class="font-bold text-charcoal mb-2">📚 About This Curriculum</h3>
 		<p class="text-sm text-charcoal/70">
 			This course follows the traditional Golden Dawn grade system, ascending the Tree of Life
 			from Malkuth (Kingdom) to Kether (Crown). Complete each lesson and pass the quiz to unlock
 			the next one. All Neophyte lessons are free.
 		</p>
-	</div>
+	</Card>
 </div>

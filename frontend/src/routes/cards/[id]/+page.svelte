@@ -1,5 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Card from '$lib/components/Card.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let { data }: { data: PageData } = $props();
 	const { cardData } = data;
@@ -24,25 +27,24 @@
 <div class="max-w-5xl mx-auto">
 	<!-- Header Section -->
 	<div class="mb-8">
-		<a
-			href="/"
-			class="inline-flex items-center text-emerald hover:text-emerald/80 font-medium mb-4 transition-colors"
-		>
-			<svg
-				class="w-5 h-5 mr-2"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M10 19l-7-7m0 0l7-7m-7 7h18"
-				/>
-			</svg>
-			Back to Cards
-		</a>
+		<div class="mb-4">
+			<Button variant="tertiary" href="/" size="md">
+				<svg
+					class="w-5 h-5 mr-2 inline"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M10 19l-7-7m0 0l7-7m-7 7h18"
+					/>
+				</svg>
+				Back to Cards
+			</Button>
+		</div>
 
 		<h1 class="text-5xl font-bold text-charcoal mb-2">
 			{card.number}. {card.name}
@@ -69,7 +71,7 @@
 		<!-- Right Column: Card Information -->
 		<div class="lg:col-span-2 space-y-6">
 			<!-- Basic Info Card -->
-			<div class="bg-white rounded-lg shadow-md p-6 border border-charcoal/10">
+			<Card padding="md">
 				<h2 class="text-2xl font-bold text-gold mb-4">Basic Information</h2>
 				<dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 					<div>
@@ -99,40 +101,38 @@
 						</div>
 					{/if}
 				</dl>
-			</div>
+			</Card>
 
 			<!-- Keywords Section -->
 			{#if card.keywords && card.keywords.length > 0}
-				<div class="bg-white rounded-lg shadow-md p-6 border border-charcoal/10">
+				<Card padding="md">
 					<h2 class="text-2xl font-bold text-gold mb-4">Keywords</h2>
 					<div class="flex flex-wrap gap-2">
 						{#each card.keywords as keyword}
-							<span class="bg-emerald text-white px-4 py-2 rounded-full text-sm font-medium">
-								{keyword}
-							</span>
+							<Badge text={keyword} color="emerald" />
 						{/each}
 					</div>
-				</div>
+				</Card>
 			{/if}
 
 			<!-- Meanings Section -->
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<!-- Upright Meaning -->
-				<div class="bg-emerald/5 rounded-lg shadow-md p-6 border border-emerald/20">
+				<Card padding="md" border="emerald" background="cream">
 					<h3 class="text-xl font-bold text-emerald mb-3">Upright Meaning</h3>
 					<p class="text-charcoal leading-relaxed">{card.upright_meaning}</p>
-				</div>
+				</Card>
 
 				<!-- Reversed Meaning -->
-				<div class="bg-gold/5 rounded-lg shadow-md p-6 border border-gold/20">
+				<Card padding="md" border="gold" background="cream">
 					<h3 class="text-xl font-bold text-gold mb-3">Reversed Meaning</h3>
 					<p class="text-charcoal leading-relaxed">{card.reversed_meaning}</p>
-				</div>
+				</Card>
 			</div>
 
 			<!-- Qabalah Correspondences Section -->
 			{#if qabalah_path}
-				<div class="bg-white rounded-lg shadow-md p-6 border-2 border-emerald">
+				<Card padding="md" border="emerald">
 					<h2 class="text-2xl font-bold text-emerald mb-4">
 						Qabalistic Correspondences
 					</h2>
@@ -174,12 +174,12 @@
 							<dd class="text-lg text-charcoal italic">{qabalah_path.intelligence}</dd>
 						</div>
 					</dl>
-				</div>
+				</Card>
 			{/if}
 
 			<!-- Astrology Correspondences Section -->
 			{#if astrology && (astrology.planet || astrology.sign || astrology.element)}
-				<div class="bg-white rounded-lg shadow-md p-6 border-2 border-gold">
+				<Card padding="md" border="gold">
 					<h2 class="text-2xl font-bold text-gold mb-4">Astrological Correspondences</h2>
 					<dl class="space-y-3">
 						{#if astrology.planet}
@@ -201,7 +201,7 @@
 							</div>
 						{/if}
 					</dl>
-				</div>
+				</Card>
 			{/if}
 		</div>
 	</div>
