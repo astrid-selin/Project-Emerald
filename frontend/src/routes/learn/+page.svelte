@@ -4,6 +4,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import Badge from '$lib/components/Badge.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
 
 	let lessons = $state<Lesson[]>(mockLessons);
 	let completedLessons = $state<string[]>([]);
@@ -32,6 +33,7 @@
 	}
 </script>
 
+<ProtectedRoute>
 <div class="max-w-4xl mx-auto">
 	<!-- Page Header -->
 	<div class="mb-8">
@@ -206,3 +208,4 @@
 		</p>
 	</Card>
 </div>
+</ProtectedRoute>

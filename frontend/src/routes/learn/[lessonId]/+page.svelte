@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import type { Lesson } from '$lib/types';
 	import LessonNav from '$lib/components/LessonNav.svelte';
+	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
 
 	let { data } = $props();
 	let lesson: Lesson = $derived(data.lesson);
@@ -75,6 +76,7 @@
 	}
 </script>
 
+<ProtectedRoute>
 <div class="max-w-4xl mx-auto">
 	<!-- Breadcrumb -->
 	<nav class="mb-6 text-sm text-charcoal/70">
@@ -395,3 +397,4 @@
 		{/if}
 	{/if}
 </div>
+</ProtectedRoute>

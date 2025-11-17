@@ -9,6 +9,7 @@
 	import Badge from '$lib/components/Badge.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
 
 	let entryId = $state('');
 	let entry = $state<JournalEntry | null>(null);
@@ -100,6 +101,7 @@
 	}
 </script>
 
+<ProtectedRoute>
 <div class="max-w-4xl mx-auto">
 	<!-- Loading State -->
 	{#if loading}
@@ -259,3 +261,4 @@
 		</div>
 	{/if}
 </div>
+</ProtectedRoute>

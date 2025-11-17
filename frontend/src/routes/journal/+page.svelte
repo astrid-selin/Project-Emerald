@@ -6,6 +6,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import Badge from '$lib/components/Badge.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
 
 	let entries = $state<JournalEntry[]>([]);
 	let filter = $state<string>('all');
@@ -69,6 +70,7 @@
 	let filteredEntries = $derived(filter === 'all' ? entries : entries.filter((e) => e.entry_type === filter));
 </script>
 
+<ProtectedRoute>
 <div class="max-w-7xl mx-auto">
 	<!-- Page Header -->
 	<div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -213,3 +215,4 @@
 		</div>
 	{/if}
 </div>
+</ProtectedRoute>

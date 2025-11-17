@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { authStore } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
+	import Card from './Card.svelte';
+	import Button from './Button.svelte';
 
 	let menuOpen = $state(false);
+	let userDropdownOpen = $state(false);
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
@@ -9,6 +14,24 @@
 
 	function closeMenu() {
 		menuOpen = false;
+	}
+
+	function toggleUserDropdown() {
+		userDropdownOpen = !userDropdownOpen;
+	}
+
+	function closeUserDropdown() {
+		userDropdownOpen = false;
+	}
+
+	async function handleSignOut() {
+		try {
+			await authStore.signOut();
+			closeUserDropdown();
+			goto('/');
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
 	}
 
 	// Navigation links
@@ -26,6 +49,25 @@
 			return $page.url.pathname === '/';
 		}
 		return $page.url.pathname.startsWith(href);
+	}
+
+	// Get user avatar color based on email
+	function getAvatarColor(email: string): string {
+		const colors = [
+			'bg-emerald',
+			'bg-purple-600',
+			'bg-blue-600',
+			'bg-pink-600',
+			'bg-orange-600',
+			'bg-teal-600'
+		];
+		const hash = email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+		return colors[hash % colors.length];
+	}
+
+	// Get first letter of email
+	function getInitial(email: string): string {
+		return email.charAt(0).toUpperCase();
 	}
 </script>
 
@@ -51,6 +93,55 @@
 						{link.label}
 					</a>
 				{/each}
+
+				<!-- User Profile or Sign In -->
+				{#if $authStore.user}
+					<div class="relative">
+						<button
+							onclick={toggleUserDropdown}
+							class="flex items-center justify-center w-10 h-10 rounded-full {getAvatarColor(
+								$authStore.user.email || ''
+							)} text-white font-semibold hover:ring-2 hover:ring-gold transition-all"
+							aria-label="User menu"
+						>
+							{getInitial($authStore.user.email || 'U')}
+						</button>
+
+						{#if userDropdownOpen}
+							<div class="absolute right-0 mt-2 w-56">
+								<Card padding="sm" shadow={true}>
+									<div class="py-2">
+										<div class="px-3 py-2 border-b border-gray-200">
+											<p class="text-sm font-medium text-gray-900 truncate">
+												{$authStore.user.email}
+											</p>
+										</div>
+										<button
+											class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+											onclick={closeUserDropdown}
+										>
+											Profile
+										</button>
+										<button
+											class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+											onclick={closeUserDropdown}
+										>
+											Settings
+										</button>
+										<button
+											class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
+											onclick={handleSignOut}
+										>
+											Sign Out
+										</button>
+									</div>
+								</Card>
+							</div>
+						{/if}
+					</div>
+				{:else}
+					<Button href="/login" variant="primary" size="sm">Sign In</Button>
+				{/if}
 			</div>
 
 			<!-- Mobile Menu Toggle -->
@@ -79,6 +170,30 @@
 						{link.label}
 					</a>
 				{/each}
+
+				<!-- Mobile User Section -->
+				<div class="border-t border-gold-700 mt-4 pt-4">
+					{#if $authStore.user}
+						<div class="mb-3">
+							<p class="text-sm text-gold-300 mb-2">Signed in as:</p>
+							<p class="text-gold font-medium truncate">{$authStore.user.email}</p>
+						</div>
+						<button
+							onclick={handleSignOut}
+							class="block w-full text-left py-2 text-red-400 hover:text-red-300 transition-colors"
+						>
+							Sign Out
+						</button>
+					{:else}
+						<a
+							href="/login"
+							onclick={closeMenu}
+							class="block py-2 text-gold hover:text-gold-300 transition-colors"
+						>
+							Sign In
+						</a>
+					{/if}
+				</div>
 			</div>
 		{/if}
 	</nav>
