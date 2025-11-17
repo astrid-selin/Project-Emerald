@@ -1,0 +1,48 @@
+{
+  "id": "the_fool",
+  "number": 0,
+  "name": "The Fool",
+  "arcana": "major",
+  "suit": null,
+  "rank": null,
+  "img": "/images/major/00_the_fool.jpg",
+  "keywords": {
+    "upright": [
+      "beginnings",
+      "innocence",
+      "spontaneity",
+      "free spirit",
+      "adventure"
+    ],
+    "reversed": [
+      "recklessness",
+      "taken advantage of",
+      "inconsideration",
+      "naivety"
+    ]
+  },
+  "meanings": {
+    "upright": "The Fool represents new beginnings, having faith in the future, being inexperienced, not knowing what to expect, having beginner's luck, improvisation and believing in the universe.",
+    "reversed": "The Fool reversed indicates recklessness, carelessness, distraction, and a lack of awareness. It suggests acting without thinking and being taken advantage of due to naivety."
+  },
+  "description": "The Fool is numbered 0, the number of unlimited potential, and does not actually have a specific place in the sequence of the Tarot cards. The Fool can be placed either at the beginning of the Major Arcana or at the end. The Major Arcana is often considered the Fool's journey through life and as such, he is ever present and therefore needs no number.",
+  "symbolism": [
+    "White rose - purity and innocence",
+    "Small dog - loyalty and protection",
+    "Cliff edge - the unknown and taking a leap of faith",
+    "Mountains - challenges ahead",
+    "Sun - enlightenment and vitality",
+    "Knapsack - untapped potential and memories"
+  ],
+  "correspondences": {
+    "element": "air",
+    "astrology": "Uranus",
+    "numerology": 0,
+    "hebrew_letter": "Aleph",
+    "kabbalistic_path": 11
+  },
+  "advice": {
+    "upright": "Take a leap of faith and embrace new opportunities with an open heart. Trust in the journey and don't be afraid to step into the unknown.",
+    "reversed": "Think before you act. Consider the consequences of your decisions and avoid impulsive behavior that could lead to negative outcomes."
+  }
+}

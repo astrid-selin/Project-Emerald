@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tarot Card Schema",
+  "description": "Schema for tarot card data structure",
+  "type": "object",
+  "required": ["id", "name", "arcana", "number"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the card",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+    "number": {
+      "type": ["integer", "null"],
+      "description": "Card number (0-21 for major arcana, 1-14 for minor arcana)",
+      "minimum": 0,
+      "maximum": 21
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the card"
+    },
+    "arcana": {
+      "type": "string",
+      "enum": ["major", "minor"],
+      "description": "Type of arcana"
+    },
+    "suit": {
+      "type": ["string", "null"],
+      "enum": ["wands", "cups", "swords", "pentacles", null],
+      "description": "Suit for minor arcana cards only"
+    },
+    "rank": {
+      "type": ["string", "null"],
+      "description": "Rank for minor arcana (ace, 2-10, page, knight, queen, king)"
+    },
+    "img": {
+      "type": "string",
+      "description": "Image URL or path for the card"
+    },
+    "keywords": {
+      "type": "object",
+      "properties": {
+        "upright": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "reversed": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "meanings": {
+      "type": "object",
+      "properties": {
+        "upright": {
+          "type": "string",
+          "description": "Upright meaning description"
+        },
+        "reversed": {
+          "type": "string",
+          "description": "Reversed meaning description"
+        }
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "General description of the card"
+    },
+    "symbolism": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Key symbols present in the card"
+    },
+    "correspondences": {
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": ["string", "null"],
+          "enum": ["fire", "water", "air", "earth", null]
+        },
+        "astrology": {
+          "type": ["string", "null"],
+          "description": "Astrological correspondence (planet, sign, etc.)"
+        },
+        "numerology": {
+          "type": ["integer", "null"],
+          "description": "Numerological value"
+        },
+        "hebrew_letter": {
+          "type": ["string", "null"],
+          "description": "Associated Hebrew letter (primarily for major arcana)"
+        },
+        "kabbalistic_path": {
+          "type": ["integer", "null"],
+          "description": "Path number on the Tree of Life"
+        }
+      }
+    },
+    "advice": {
+      "type": "object",
+      "properties": {
+        "upright": {
+          "type": "string",
+          "description": "Advice when card appears upright"
+        },
+        "reversed": {
+          "type": "string",
+          "description": "Advice when card appears reversed"
+        }
+      }
+    }
+  }
+}

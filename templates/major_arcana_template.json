@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "number": 0,
+  "name": "",
+  "arcana": "major",
+  "suit": null,
+  "rank": null,
+  "img": "",
+  "keywords": {
+    "upright": [],
+    "reversed": []
+  },
+  "meanings": {
+    "upright": "",
+    "reversed": ""
+  },
+  "description": "",
+  "symbolism": [],
+  "correspondences": {
+    "element": null,
+    "astrology": "",
+    "numerology": 0,
+    "hebrew_letter": "",
+    "kabbalistic_path": null
+  },
+  "advice": {
+    "upright": "",
+    "reversed": ""
+  }
+}

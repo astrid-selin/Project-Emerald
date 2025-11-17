@@ -1,0 +1,113 @@
+{
+  "deck": {
+    "total_cards": 78,
+    "major_arcana": {
+      "count": 22,
+      "cards": [
+        {"number": 0, "name": "The Fool", "id": "the_fool"},
+        {"number": 1, "name": "The Magician", "id": "the_magician"},
+        {"number": 2, "name": "The High Priestess", "id": "the_high_priestess"},
+        {"number": 3, "name": "The Empress", "id": "the_empress"},
+        {"number": 4, "name": "The Emperor", "id": "the_emperor"},
+        {"number": 5, "name": "The Hierophant", "id": "the_hierophant"},
+        {"number": 6, "name": "The Lovers", "id": "the_lovers"},
+        {"number": 7, "name": "The Chariot", "id": "the_chariot"},
+        {"number": 8, "name": "Strength", "id": "strength"},
+        {"number": 9, "name": "The Hermit", "id": "the_hermit"},
+        {"number": 10, "name": "Wheel of Fortune", "id": "wheel_of_fortune"},
+        {"number": 11, "name": "Justice", "id": "justice"},
+        {"number": 12, "name": "The Hanged Man", "id": "the_hanged_man"},
+        {"number": 13, "name": "Death", "id": "death"},
+        {"number": 14, "name": "Temperance", "id": "temperance"},
+        {"number": 15, "name": "The Devil", "id": "the_devil"},
+        {"number": 16, "name": "The Tower", "id": "the_tower"},
+        {"number": 17, "name": "The Star", "id": "the_star"},
+        {"number": 18, "name": "The Moon", "id": "the_moon"},
+        {"number": 19, "name": "The Sun", "id": "the_sun"},
+        {"number": 20, "name": "Judgement", "id": "judgement"},
+        {"number": 21, "name": "The World", "id": "the_world"}
+      ]
+    },
+    "minor_arcana": {
+      "count": 56,
+      "suits": {
+        "wands": {
+          "element": "fire",
+          "cards": [
+            {"number": 1, "rank": "ace", "name": "Ace of Wands", "id": "ace_of_wands"},
+            {"number": 2, "rank": "2", "name": "Two of Wands", "id": "two_of_wands"},
+            {"number": 3, "rank": "3", "name": "Three of Wands", "id": "three_of_wands"},
+            {"number": 4, "rank": "4", "name": "Four of Wands", "id": "four_of_wands"},
+            {"number": 5, "rank": "5", "name": "Five of Wands", "id": "five_of_wands"},
+            {"number": 6, "rank": "6", "name": "Six of Wands", "id": "six_of_wands"},
+            {"number": 7, "rank": "7", "name": "Seven of Wands", "id": "seven_of_wands"},
+            {"number": 8, "rank": "8", "name": "Eight of Wands", "id": "eight_of_wands"},
+            {"number": 9, "rank": "9", "name": "Nine of Wands", "id": "nine_of_wands"},
+            {"number": 10, "rank": "10", "name": "Ten of Wands", "id": "ten_of_wands"},
+            {"number": 11, "rank": "page", "name": "Page of Wands", "id": "page_of_wands"},
+            {"number": 12, "rank": "knight", "name": "Knight of Wands", "id": "knight_of_wands"},
+            {"number": 13, "rank": "queen", "name": "Queen of Wands", "id": "queen_of_wands"},
+            {"number": 14, "rank": "king", "name": "King of Wands", "id": "king_of_wands"}
+          ]
+        },
+        "cups": {
+          "element": "water",
+          "cards": [
+            {"number": 1, "rank": "ace", "name": "Ace of Cups", "id": "ace_of_cups"},
+            {"number": 2, "rank": "2", "name": "Two of Cups", "id": "two_of_cups"},
+            {"number": 3, "rank": "3", "name": "Three of Cups", "id": "three_of_cups"},
+            {"number": 4, "rank": "4", "name": "Four of Cups", "id": "four_of_cups"},
+            {"number": 5, "rank": "5", "name": "Five of Cups", "id": "five_of_cups"},
+            {"number": 6, "rank": "6", "name": "Six of Cups", "id": "six_of_cups"},
+            {"number": 7, "rank": "7", "name": "Seven of Cups", "id": "seven_of_cups"},
+            {"number": 8, "rank": "8", "name": "Eight of Cups", "id": "eight_of_cups"},
+            {"number": 9, "rank": "9", "name": "Nine of Cups", "id": "nine_of_cups"},
+            {"number": 10, "rank": "10", "name": "Ten of Cups", "id": "ten_of_cups"},
+            {"number": 11, "rank": "page", "name": "Page of Cups", "id": "page_of_cups"},
+            {"number": 12, "rank": "knight", "name": "Knight of Cups", "id": "knight_of_cups"},
+            {"number": 13, "rank": "queen", "name": "Queen of Cups", "id": "queen_of_cups"},
+            {"number": 14, "rank": "king", "name": "King of Cups", "id": "king_of_cups"}
+          ]
+        },
+        "swords": {
+          "element": "air",
+          "cards": [
+            {"number": 1, "rank": "ace", "name": "Ace of Swords", "id": "ace_of_swords"},
+            {"number": 2, "rank": "2", "name": "Two of Swords", "id": "two_of_swords"},
+            {"number": 3, "rank": "3", "name": "Three of Swords", "id": "three_of_swords"},
+            {"number": 4, "rank": "4", "name": "Four of Swords", "id": "four_of_swords"},
+            {"number": 5, "rank": "5", "name": "Five of Swords", "id": "five_of_swords"},
+            {"number": 6, "rank": "6", "name": "Six of Swords", "id": "six_of_swords"},
+            {"number": 7, "rank": "7", "name": "Seven of Swords", "id": "seven_of_swords"},
+            {"number": 8, "rank": "8", "name": "Eight of Swords", "id": "eight_of_swords"},
+            {"number": 9, "rank": "9", "name": "Nine of Swords", "id": "nine_of_swords"},
+            {"number": 10, "rank": "10", "name": "Ten of Swords", "id": "ten_of_swords"},
+            {"number": 11, "rank": "page", "name": "Page of Swords", "id": "page_of_swords"},
+            {"number": 12, "rank": "knight", "name": "Knight of Swords", "id": "knight_of_swords"},
+            {"number": 13, "rank": "queen", "name": "Queen of Swords", "id": "queen_of_swords"},
+            {"number": 14, "rank": "king", "name": "King of Swords", "id": "king_of_swords"}
+          ]
+        },
+        "pentacles": {
+          "element": "earth",
+          "cards": [
+            {"number": 1, "rank": "ace", "name": "Ace of Pentacles", "id": "ace_of_pentacles"},
+            {"number": 2, "rank": "2", "name": "Two of Pentacles", "id": "two_of_pentacles"},
+            {"number": 3, "rank": "3", "name": "Three of Pentacles", "id": "three_of_pentacles"},
+            {"number": 4, "rank": "4", "name": "Four of Pentacles", "id": "four_of_pentacles"},
+            {"number": 5, "rank": "5", "name": "Five of Pentacles", "id": "five_of_pentacles"},
+            {"number": 6, "rank": "6", "name": "Six of Pentacles", "id": "six_of_pentacles"},
+            {"number": 7, "rank": "7", "name": "Seven of Pentacles", "id": "seven_of_pentacles"},
+            {"number": 8, "rank": "8", "name": "Eight of Pentacles", "id": "eight_of_pentacles"},
+            {"number": 9, "rank": "9", "name": "Nine of Pentacles", "id": "nine_of_pentacles"},
+            {"number": 10, "rank": "10", "name": "Ten of Pentacles", "id": "ten_of_pentacles"},
+            {"number": 11, "rank": "page", "name": "Page of Pentacles", "id": "page_of_pentacles"},
+            {"number": 12, "rank": "knight", "name": "Knight of Pentacles", "id": "knight_of_pentacles"},
+            {"number": 13, "rank": "queen", "name": "Queen of Pentacles", "id": "queen_of_pentacles"},
+            {"number": 14, "rank": "king", "name": "King of Pentacles", "id": "king_of_pentacles"}
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "number": 1,
+  "name": "",
+  "arcana": "minor",
+  "suit": "",
+  "rank": "",
+  "img": "",
+  "keywords": {
+    "upright": [],
+    "reversed": []
+  },
+  "meanings": {
+    "upright": "",
+    "reversed": ""
+  },
+  "description": "",
+  "symbolism": [],
+  "correspondences": {
+    "element": null,
+    "astrology": null,
+    "numerology": null,
+    "hebrew_letter": null,
+    "kabbalistic_path": null
+  },
+  "advice": {
+    "upright": "",
+    "reversed": ""
+  }
+}

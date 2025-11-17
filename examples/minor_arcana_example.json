@@ -1,0 +1,48 @@
+{
+  "id": "ace_of_wands",
+  "number": 1,
+  "name": "Ace of Wands",
+  "arcana": "minor",
+  "suit": "wands",
+  "rank": "ace",
+  "img": "/images/minor/wands/01_ace_of_wands.jpg",
+  "keywords": {
+    "upright": [
+      "inspiration",
+      "creative spark",
+      "new initiative",
+      "new passion",
+      "enthusiasm"
+    ],
+    "reversed": [
+      "lack of energy",
+      "lack of passion",
+      "boredom",
+      "missed opportunities",
+      "creative blocks"
+    ]
+  },
+  "meanings": {
+    "upright": "The Ace of Wands represents inspiration, new opportunities, growth, and potential. It is a very positive card if you are looking to start a new project or venture. It signifies the birth of an idea or project that you are passionate about.",
+    "reversed": "The Ace of Wands reversed indicates delays, setbacks, and lack of motivation. You may be feeling uninspired or struggling to find direction. Creative blocks and missed opportunities are highlighted."
+  },
+  "description": "The Ace of Wands is a card of new beginnings, creative energy, and inspired action. Like all Aces, it represents the seed of potential in the suit of Wands, which is associated with fire, passion, and willpower. This card often appears when you are ready to pursue a new creative venture or embrace a new phase of personal growth.",
+  "symbolism": [
+    "Hand emerging from cloud - divine inspiration",
+    "Wand sprouting leaves - growth and potential",
+    "Landscape - fertile ground for new ideas",
+    "Castle in distance - goals and ambitions",
+    "Mountains - challenges to overcome"
+  ],
+  "correspondences": {
+    "element": "fire",
+    "astrology": "Aries, Leo, Sagittarius",
+    "numerology": 1,
+    "hebrew_letter": null,
+    "kabbalistic_path": null
+  },
+  "advice": {
+    "upright": "Seize this moment of inspiration and take action on your creative ideas. The energy is right for starting new projects and pursuing your passions with enthusiasm.",
+    "reversed": "Reconnect with your inner spark. Take time to find what truly inspires you rather than forcing creativity. Remove obstacles that are blocking your energy and motivation."
+  }
+}
