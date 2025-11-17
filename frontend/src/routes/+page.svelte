@@ -4,6 +4,7 @@
 	import type { Card as CardType } from '$lib/types';
 	import Card from '$lib/components/Card.svelte';
 	import Badge from '$lib/components/Badge.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
 	let cards = $state<CardType[]>([]);
@@ -27,8 +28,35 @@
 <div class="max-w-7xl mx-auto">
 	<!-- Page Header -->
 	<div class="mb-8">
-		<h2 class="text-4xl font-bold text-charcoal mb-2">Tarot Card Library</h2>
+		<h2 class="text-4xl font-bold text-charcoal mb-2">Welcome to Emerald</h2>
 		<p class="text-lg text-charcoal/70">
+			Your journey into tarot, qabalah, and esoteric wisdom
+		</p>
+	</div>
+
+	<!-- Journal CTA -->
+	<div class="mb-12">
+		<Card padding="lg" border="gold" background="cream">
+			<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+				<div class="flex-1">
+					<h3 class="text-2xl font-bold text-charcoal mb-2">Record Your Practice</h3>
+					<p class="text-base text-charcoal/70">
+						Track your tarot readings, dreams, and magical practice in your personal journal.
+						Capture moon phases, card meanings, and insights for deeper understanding.
+					</p>
+				</div>
+				<div class="flex flex-col gap-3">
+					<Button href="/journal/new" variant="primary" size="lg">+ New Entry</Button>
+					<Button href="/journal" variant="secondary" size="md">View Journal</Button>
+				</div>
+			</div>
+		</Card>
+	</div>
+
+	<!-- Card Library Header -->
+	<div class="mb-8">
+		<h3 class="text-3xl font-bold text-charcoal mb-2">Tarot Card Library</h3>
+		<p class="text-base text-charcoal/70">
 			Explore the complete deck of 78 tarot cards with their esoteric correspondences
 		</p>
 	</div>

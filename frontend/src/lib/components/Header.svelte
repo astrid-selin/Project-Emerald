@@ -16,7 +16,8 @@
 		{ href: '/', label: 'Home' },
 		{ href: '/qabalah', label: 'Qabalah' },
 		{ href: '/cards', label: 'Cards' },
-		{ href: '/learn', label: 'Learn' }
+		{ href: '/learn', label: 'Learn' },
+		{ href: '/journal', label: 'Journal' }
 	];
 
 	// Check if a link is active
