@@ -3,7 +3,8 @@ import type {
 	CardWithCorrespondences,
 	CardsResponse,
 	CardQueryOptions,
-	CardDetailWithCorrespondences
+	CardDetailWithCorrespondences,
+	TreeOfLife
 } from './types';
 
 const API_BASE = 'http://localhost:5000';
@@ -113,4 +114,25 @@ export async function getCardsBySuit(suit: string): Promise<Card[]> {
  */
 export async function getCardsByElement(element: string): Promise<Card[]> {
 	return getCards({ element });
+}
+
+/**
+ * Fetch the Tree of Life with all Sephiroth and Paths
+ * @returns Tree of Life data with sephiroth and paths
+ */
+export async function getTreeOfLife(): Promise<TreeOfLife> {
+	const url = `${API_BASE}/api/qabalah/tree`;
+
+	try {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error('Error fetching Tree of Life:', error);
+		throw error;
+	}
 }
