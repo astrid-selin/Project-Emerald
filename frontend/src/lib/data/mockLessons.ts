@@ -200,5 +200,225 @@ We'll explore each card in detail in future lessons.`,
 		],
 		unlocks_after_days: 2,
 		is_free: true
+	},
+	{
+		id: 'neophyte_04',
+		title: 'The Minor Arcana: Court Cards',
+		grade: '0°=0°',
+		grade_name: 'Neophyte',
+		sephirah_context: 'Malkuth',
+		order: 4,
+		estimated_time: 30,
+		content: {
+			theory: `The Court Cards - Page, Knight, Queen, and King - represent people, personality types, and stages of mastery in each element.
+
+**Pages** represent the student, the beginner, youthful energy, and messages. They are learning their element.
+
+**Knights** represent action, movement, and the element in its most active form. They take the Page's lessons and put them into motion.
+
+**Queens** represent mastery of the inner, receptive aspect of their element. They embody emotional and spiritual maturity.
+
+**Kings** represent mastery of the outer, active aspect of their element. They embody worldly power and authority.
+
+Each court card combines its rank with its suit's element:
+- Page of Wands: Enthusiastic beginner in creative pursuits
+- Knight of Cups: Romantic, emotional action
+- Queen of Swords: Intellectual and perceptive wisdom
+- King of Pentacles: Material success and practical mastery`,
+
+			practice: `Choose one court card from each suit. Study their imagery. Can you identify the Page, Knight, Queen, or King energy in people you know? In yourself? Journal about which court card you feel most aligned with today.`,
+
+			meditation: `Visualize yourself progressing through the four stages: Page (learning), Knight (doing), Queen (being), King (mastering). What stage are you at in different areas of your life?`,
+
+			references: [
+				'Mary K. Greer, Understanding the Tarot Court',
+				'Rachel Pollack, Seventy-Eight Degrees of Wisdom'
+			]
+		},
+		quiz: [
+			{
+				question: 'Which court card represents the beginner or student?',
+				answers: ['Page', 'Knight', 'Queen', 'King'],
+				correct: 0,
+				explanation: 'The Page represents the student, beginner, and learning phase of each element.'
+			},
+			{
+				question: 'What does the Knight represent?',
+				answers: [
+					'Mastery and authority',
+					'Learning and messages',
+					'Action and movement',
+					'Emotional wisdom'
+				],
+				correct: 2,
+				explanation: 'Knights represent action, movement, and the element in its most dynamic form.'
+			},
+			{
+				question: 'Which court card embodies mature inner mastery?',
+				answers: ['Page', 'Knight', 'Queen', 'King'],
+				correct: 2,
+				explanation: 'The Queen represents mastery of the inner, receptive aspect of the element.'
+			}
+		],
+		unlocks_after_days: 3,
+		is_free: false
+	},
+	{
+		id: 'neophyte_05',
+		title: 'The Minor Arcana: Numbered Cards',
+		grade: '0°=0°',
+		grade_name: 'Neophyte',
+		sephirah_context: 'Malkuth',
+		order: 5,
+		estimated_time: 35,
+		content: {
+			theory: `The numbered cards (Ace through Ten) of each suit tell a story of that element's journey and manifestation.
+
+**Aces** represent the pure, undiluted essence and potential of each element - the seed.
+
+**Twos** represent duality, choice, and balance.
+
+**Threes** represent initial manifestation and growth.
+
+**Fours** represent stability and structure.
+
+**Fives** represent conflict, challenge, and change.
+
+**Sixes** represent harmony, success, and movement forward.
+
+**Sevens** represent reflection, assessment, and spiritual challenges.
+
+**Eights** represent mastery, speed, and transformation.
+
+**Nines** represent near-completion and the culmination of the journey.
+
+**Tens** represent completion, endings, and the transition to new beginnings.
+
+Each number also corresponds to a Sephirah on the Tree of Life, adding another layer of meaning.`,
+
+			practice: `Lay out all four Aces, then all four Twos, etc. Study each row. What patterns do you notice? How does each element express that number differently? Choose one number and journal about what it means to you.`,
+
+			meditation: `Imagine yourself holding an Ace - pure potential. Watch it grow through the numbers, developing, facing challenges, achieving mastery, and finally completing. This is the cycle of all endeavors.`,
+
+			references: [
+				'Israel Regardie, The Golden Dawn',
+				'Rachel Pollack, Seventy-Eight Degrees of Wisdom'
+			]
+		},
+		quiz: [
+			{
+				question: 'What do the Aces represent?',
+				answers: [
+					'Completion and endings',
+					'Pure potential and essence',
+					'Conflict and challenge',
+					'Stability and structure'
+				],
+				correct: 1,
+				explanation: 'Aces represent the pure, undiluted essence and potential of each element.'
+			},
+			{
+				question: 'Which number represents conflict and challenge?',
+				answers: ['Three', 'Four', 'Five', 'Six'],
+				correct: 2,
+				explanation: 'Fives represent conflict, challenge, and the need for change.'
+			},
+			{
+				question: 'What do the Tens represent?',
+				answers: [
+					'Beginning of the journey',
+					'Stability and structure',
+					'Completion and transition',
+					'Initial growth'
+				],
+				correct: 2,
+				explanation: 'Tens represent completion, endings, and the transition to new beginnings.'
+			}
+		],
+		unlocks_after_days: 4,
+		is_free: false
+	},
+	{
+		id: 'neophyte_06',
+		title: 'Creating Sacred Space',
+		grade: '0°=0°',
+		grade_name: 'Neophyte',
+		sephirah_context: 'Malkuth',
+		order: 6,
+		estimated_time: 25,
+		content: {
+			theory: `Before engaging in magical or divinatory work, practitioners create sacred space. This serves multiple purposes:
+
+1. **Psychological**: Signals to your mind that you're entering a special state of awareness
+2. **Energetic**: Clears and purifies the working area
+3. **Protective**: Establishes boundaries against unwanted influences
+4. **Focusing**: Centers your attention and intention
+
+The most common method in the Golden Dawn tradition is the **Lesser Banishing Ritual of the Pentagram (LBRP)**, but simpler methods work too:
+
+- Lighting a candle with intention
+- Cleansing with incense or sound
+- Visualizing protective light
+- Calling the four directions/elements
+- Simply stating your sacred intention
+
+The key is consistent practice and genuine intention.`,
+
+			practice: `Create your own simple sacred space ritual. It might include:
+1. Taking three deep breaths to center yourself
+2. Lighting a candle
+3. Acknowledging the four directions and their elements
+4. Stating your intention (e.g., "I enter this space for wisdom and truth")
+5. Proceeding with your work
+6. Giving thanks and extinguishing the candle when done
+
+Practice this before your next tarot reading.`,
+
+			meditation: `Visualize yourself surrounded by a sphere of white light. This light extends 6 feet in all directions. Nothing harmful can pass through it. This is your sacred space, and you control it completely.`,
+
+			references: [
+				'Israel Regardie, The Middle Pillar',
+				'Dion Fortune, Psychic Self-Defense'
+			]
+		},
+		quiz: [
+			{
+				question: 'What is the primary purpose of creating sacred space?',
+				answers: [
+					'To impress others',
+					'To make magic stronger',
+					'To signal a shift in awareness and intention',
+					'To follow tradition'
+				],
+				correct: 2,
+				explanation:
+					'Sacred space primarily signals to your consciousness that you are entering a special state of awareness and intention.'
+			},
+			{
+				question: 'What is the most important element of sacred space creation?',
+				answers: [
+					'Expensive tools',
+					'Complex rituals',
+					'Consistent practice and genuine intention',
+					'Perfect memorization'
+				],
+				correct: 2,
+				explanation:
+					'Genuine intention and consistent practice are far more important than elaborate tools or complex rituals.'
+			},
+			{
+				question: 'In the Golden Dawn tradition, what is LBRP?',
+				answers: [
+					'A tarot spread',
+					'The Lesser Banishing Ritual of the Pentagram',
+					'A meditation technique',
+					'A type of incense'
+				],
+				correct: 1,
+				explanation: 'LBRP stands for the Lesser Banishing Ritual of the Pentagram, a foundational Golden Dawn practice.'
+			}
+		],
+		unlocks_after_days: 5,
+		is_free: false
 	}
 ];

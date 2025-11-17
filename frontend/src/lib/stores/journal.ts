@@ -1,66 +1,86 @@
 import { writable, get } from 'svelte/store';
+import { authStore } from './auth';
+import * as firestoreService from '$lib/firebase/firestore';
 import type { JournalEntry } from '$lib/types';
 
 function createJournalStore() {
 	const { subscribe, set, update } = writable<JournalEntry[]>([]);
+	let currentUserId: string | null = null;
 
-	// Load from localStorage on init
-	if (typeof window !== 'undefined') {
-		const stored = localStorage.getItem('journal_entries');
-		if (stored) {
+	// Load entries when user changes
+	authStore.subscribe(async (authState) => {
+		if (authState.user && authState.user.uid !== currentUserId) {
+			currentUserId = authState.user.uid;
 			try {
-				set(JSON.parse(stored));
-			} catch (e) {
-				console.error('Failed to parse journal entries from localStorage:', e);
+				const entries = await firestoreService.getJournalEntries(authState.user.uid);
+				set(entries);
+			} catch (error) {
+				console.error('Failed to load journal entries:', error);
 				set([]);
 			}
+		} else if (!authState.user) {
+			currentUserId = null;
+			set([]);
 		}
-	}
+	});
 
 	return {
 		subscribe,
 
-		addEntry: (entry: Omit<JournalEntry, 'id' | 'created_at'>) => {
-			const newEntry: JournalEntry = {
-				...entry,
-				id: crypto.randomUUID(),
-				created_at: new Date().toISOString()
-			};
+		addEntry: async (entry: Omit<JournalEntry, 'id' | 'created_at'>) => {
+			// Get current user synchronously
+			let userId: string | null = null;
+			authStore.subscribe(state => {
+				if (state.user) userId = state.user.uid;
+			})();
 
-			update((entries) => {
-				const updated = [newEntry, ...entries];
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('journal_entries', JSON.stringify(updated));
-				}
-				return updated;
-			});
+			if (!userId) throw new Error('Must be logged in to add journal entry');
+
+			const newEntry = await firestoreService.addJournalEntry(userId, entry);
+
+			// Update local state
+			update(entries => [newEntry, ...entries]);
 
 			return newEntry.id;
 		},
 
-		updateEntry: (id: string, updates: Partial<JournalEntry>) => {
+		updateEntry: async (id: string, updates: Partial<JournalEntry>) => {
+			// Note: This function is not implemented in the Firestore service yet
+			// For now, we'll just update locally
 			update((entries) => {
-				const updated = entries.map((e) => (e.id === id ? { ...e, ...updates } : e));
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('journal_entries', JSON.stringify(updated));
-				}
-				return updated;
+				return entries.map((e) => (e.id === id ? { ...e, ...updates } : e));
 			});
 		},
 
-		deleteEntry: (id: string) => {
-			update((entries) => {
-				const updated = entries.filter((e) => e.id !== id);
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('journal_entries', JSON.stringify(updated));
-				}
-				return updated;
-			});
+		deleteEntry: async (id: string) => {
+			let userId: string | null = null;
+			authStore.subscribe(state => {
+				if (state.user) userId = state.user.uid;
+			})();
+
+			if (!userId) throw new Error('Must be logged in to delete journal entry');
+
+			await firestoreService.deleteJournalEntry(userId, id);
+
+			// Update local state
+			update(entries => entries.filter((e) => e.id !== id));
 		},
 
 		getEntry: (id: string): JournalEntry | undefined => {
 			const entries = get({ subscribe });
 			return entries.find((e) => e.id === id);
+		},
+
+		refresh: async () => {
+			let userId: string | null = null;
+			authStore.subscribe(state => {
+				if (state.user) userId = state.user.uid;
+			})();
+
+			if (!userId) return;
+
+			const entries = await firestoreService.getJournalEntries(userId);
+			set(entries);
 		}
 	};
 }
