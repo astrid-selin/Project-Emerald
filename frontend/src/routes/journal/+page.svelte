@@ -127,14 +127,25 @@
 
 	<!-- Empty State -->
 	{#if filteredEntries.length === 0 && filter === 'all'}
-		<div class="text-center py-20">
-			<p class="text-2xl text-charcoal/70 mb-4">No entries yet. Start your first reading!</p>
-			<Button href="/journal/new" variant="primary" size="lg">Create Your First Entry</Button>
-		</div>
+		<Card padding="lg">
+			<div class="text-center py-12">
+				<div class="text-6xl mb-4">📔</div>
+				<h3 class="text-2xl font-bold text-charcoal mb-3">No Entries Yet</h3>
+				<p class="text-lg text-charcoal/70 mb-6">
+					Start documenting your tarot practice, dreams, and magical work
+				</p>
+				<Button href="/journal/new" variant="primary" size="lg">Create Your First Entry</Button>
+			</div>
+		</Card>
 	{:else if filteredEntries.length === 0}
-		<div class="text-center py-20">
-			<p class="text-xl text-charcoal/70">No {filter} entries found</p>
-		</div>
+		<Card padding="lg">
+			<div class="text-center py-12">
+				<div class="text-6xl mb-4">🔍</div>
+				<h3 class="text-xl font-bold text-charcoal mb-2">No {filter} entries found</h3>
+				<p class="text-charcoal/70 mb-4">Try a different filter or create a new entry</p>
+				<Button href="/journal/new" variant="secondary">Add Entry</Button>
+			</div>
+		</Card>
 	{:else}
 		<!-- Entries Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
