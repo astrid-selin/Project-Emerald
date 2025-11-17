@@ -148,3 +148,23 @@ export interface UserProgress {
 	streak_days: number;
 	last_activity: string;
 }
+
+// Journal System Types
+export interface JournalEntry {
+	id: string;
+	date: string; // ISO format
+	title: string;
+	entry_type: 'reading' | 'dream' | 'practice' | 'reflection';
+	cards_drawn?: number[]; // Card IDs
+	spread_type?: string;
+	notes: string;
+	moon_phase?: string;
+	tags?: string[];
+	created_at: string;
+}
+
+export interface MoonPhase {
+	phase: string; // "New Moon", "Waxing Crescent", etc.
+	illumination: number; // 0-100
+	emoji: string;
+}

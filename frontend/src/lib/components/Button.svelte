@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		variant?: 'primary' | 'secondary' | 'tertiary';
 		size?: 'sm' | 'md' | 'lg';
@@ -6,6 +8,8 @@
 		fullWidth?: boolean;
 		href?: string;
 		onclick?: () => void;
+		type?: 'button' | 'submit' | 'reset';
+		children?: Snippet;
 	}
 
 	let {
@@ -15,6 +19,7 @@
 		fullWidth = false,
 		href,
 		onclick,
+		type = 'button',
 		children
 	}: Props = $props();
 
@@ -47,10 +52,14 @@
 
 {#if href}
 	<a {href} class={buttonClasses} aria-disabled={disabled}>
-		{@render children()}
+		{#if children}
+			{@render children()}
+		{/if}
 	</a>
 {:else}
-	<button {onclick} {disabled} class={buttonClasses} type="button">
-		{@render children()}
+	<button {onclick} {disabled} {type} class={buttonClasses}>
+		{#if children}
+			{@render children()}
+		{/if}
 	</button>
 {/if}

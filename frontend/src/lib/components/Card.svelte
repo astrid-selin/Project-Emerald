@@ -1,10 +1,13 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		padding?: 'sm' | 'md' | 'lg';
 		shadow?: boolean;
 		hover?: boolean;
 		border?: 'none' | 'emerald' | 'gold';
 		background?: 'white' | 'cream';
+		children?: Snippet;
 	}
 
 	let {
@@ -43,5 +46,7 @@
 		border
 	]} {backgroundClasses[background]}"
 >
-	{@render children()}
+	{#if children}
+		{@render children()}
+	{/if}
 </div>
