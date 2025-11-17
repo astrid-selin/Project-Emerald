@@ -1,88 +1,135 @@
-# Esoteric Knowledge API v3.0
+# Project Emerald
 
-A comprehensive REST API for esoteric studies including Tarot, Qabalah, Astrology, and Ritual practices. Built with Python, Flask, and SQLite.
+A comprehensive platform for exploring the Western Hermetic Tradition, including Tarot, Qabalah, Astrology, and ceremonial ritual practices. Project Emerald provides both a REST API and interactive web interface for studying the interconnected correspondences of esoteric wisdom.
+
+Built with Python, Flask, SQLite, and SvelteKit.
+
+## Overview
+
+Project Emerald is an educational platform dedicated to the study and practice of Western Hermetic traditions. It integrates multiple systems of esoteric knowledge into a unified, cross-referenced framework for serious students of the mysteries.
+
+### What is the Hermetic Tradition?
+
+The Western Hermetic Tradition encompasses the spiritual, philosophical, and magical teachings rooted in ancient Greco-Egyptian wisdom, refined through medieval alchemy, Renaissance magic, and modern ceremonial practice. It synthesizes:
+
+- **Tarot**: The pictorial book of 78 archetypal keys
+- **Qabalah**: The Tree of Life and its ten emanations
+- **Astrology**: Celestial correspondences and planetary influences
+- **Ritual Magic**: Ceremonial practices for spiritual development
+- **Alchemy**: The transformation of consciousness
+- **Sacred Geometry**: The mathematical structure of creation
 
 ## Features
 
-### Complete Tarot Deck
-- Full deck of 78 tarot cards (22 Major Arcana + 56 Minor Arcana)
-- Multi-system descriptions (RWS, Thoth, Golden Dawn, Marseille)
-- Rich esoteric correspondences (Qabalah, astrology, elements, colors, gemstones, herbs)
+### 🃏 Complete Tarot System
+- Full deck of 78 cards (22 Major Arcana + 56 Minor Arcana)
+- Multi-system interpretations (Rider-Waite-Smith, Thoth, Golden Dawn, Marseille)
+- Deep esoteric correspondences (Qabalah, astrology, elements, colors, gemstones, herbs)
+- Interactive card exploration with full cross-references
 
-### Hermetic Qabalah
-- **10 Sephiroth** on the Tree of Life with complete correspondences
-  - Divine names, archangels, angelic orders
+### 🌳 Hermetic Qabalah
+- **10 Sephiroth** on the Tree of Life with complete attributions
+  - Divine names, archangels, and angelic orders
   - Four-world color scales (Atziluth, Briah, Yetzirah, Assiah)
-  - Virtues, vices, spiritual experiences
+  - Virtues, vices, and spiritual experiences
+  - Planetary and elemental associations
 - **22 Paths** connecting the Sephiroth
   - Hebrew letters and their meanings
   - Direct links to Major Arcana cards
-  - Elemental, planetary, and zodiacal associations
+  - Elemental, planetary, and zodiacal attributions
 
-### Western Astrology
+### ✨ Western Astrology
 - **7 Classical Planets** (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn)
   - Planetary rulerships, exaltations, detriments, and falls
   - Sephirothic correspondences
-  - Metals, colors, gemstones, magical powers
+  - Traditional metals, colors, gemstones, and magical powers
 - **12 Zodiac Signs**
   - Elements (Fire, Earth, Air, Water) and modalities (Cardinal, Fixed, Mutable)
-  - Planetary rulerships and dignities
-  - Tarot correspondences
+  - Planetary rulerships and essential dignities
+  - Tarot and Tree of Life correspondences
 
-### Esoteric Rituals
-- **7 Golden Dawn Rituals** from beginner to expert level
+### 🕯️ Ceremonial Rituals
+- **7 Golden Dawn Rituals** from beginner to advanced practice
   - Lesser Banishing Ritual of the Pentagram (LBRP)
   - Middle Pillar Ritual (MPR)
   - Banishing/Invoking Rituals of the Hexagram (BRH/IRH)
   - Rose Cross Ritual (RC)
   - Opening by Watchtower (OWT)
-- Complete instructions, visualizations, and words of power
-- Difficulty ratings and practice progression guidance
+- Complete step-by-step instructions with visualizations
+- Words of power and ritual gestures
+- Difficulty ratings and suggested practice progression
 
-### Cross-Referenced System
-All correspondences are interconnected:
-- Major Arcana cards linked to Tree of Life paths
-- Paths connected to Sephiroth
-- Sephiroth associated with planets
-- Planets ruling zodiac signs
-- Signs corresponding to tarot cards
+### 🔗 Unified Correspondence System
+All systems are deeply interconnected:
+- Major Arcana cards mapped to Tree of Life paths
+- Paths connecting Sephiroth on the Tree
+- Sephiroth linked to planetary spheres
+- Planets ruling zodiac signs and elements
+- Complete cross-referencing across all systems
 
 ## Installation
 
+### Prerequisites
+
+- Python 3.8+
+- Node.js 18+ (for frontend)
+- Git
+
+### Backend Setup
+
 1. Clone this repository:
 ```bash
-git clone https://github.com/astrid-selin/TarotAPI.git
-cd TarotAPI
+git clone https://github.com/astrid-selin/Project-Emerald.git
+cd Project-Emerald
 ```
 
-2. Install dependencies:
+2. Install Python dependencies:
 ```bash
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 ```
 
 3. Create the database:
 ```bash
-python3 migrate_to_sqlite.py
+python3 scripts/migrate_to_sqlite.py
 ```
 
 This will create `esoteric_knowledge.db` with:
-- 78 tarot cards with system descriptions
-- 10 Sephiroth
-- 22 Paths
-- 7 Planets
-- 12 Zodiac Signs
-- 7 Rituals
+- 78 tarot cards with multi-system descriptions
+- 10 Sephiroth on the Tree of Life
+- 22 Paths with Hebrew letter attributions
+- 7 Classical planets with correspondences
+- 12 Zodiac signs with dignities
+- 7 Golden Dawn rituals
 
-## Usage
-
-Start the API server:
+4. Start the API server:
 ```bash
-python3 app.py
+python3 backend/app.py
 ```
 
 The API will be available at `http://localhost:5000`
 
-Visit `http://localhost:5000/` for interactive API documentation.
+Visit `http://localhost:5000/` for the API documentation endpoint.
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173`
+
+See `frontend/README.md` for detailed frontend documentation.
 
 ## API Endpoints
 
@@ -385,23 +432,31 @@ The SQLite database (`esoteric_knowledge.db`) contains:
 ## Project Structure
 
 ```
-TarotAPI/
-├── app.py                      # Main Flask application
-├── routes/                     # API route blueprints
-│   ├── __init__.py
-│   ├── qabalah.py             # Qabalah endpoints
-│   ├── astrology.py           # Astrology endpoints
-│   └── rituals.py             # Rituals endpoints
-├── esoteric_knowledge.db       # SQLite database
-├── schema.sql                  # Database schema
-├── migrate_to_sqlite.py        # Database migration script
-├── seed_qabalah.py            # Qabalah seed data
-├── seed_astrology.py          # Astrology seed data
-├── seed_rituals.py            # Rituals seed data
-├── card_correspondences.py     # Tarot correspondences
-├── system_descriptions.py      # Multi-system descriptions
-├── tarot_data.json            # Original card data
-├── requirements.txt           # Python dependencies
+Project-Emerald/
+├── backend/                    # Flask REST API
+│   ├── app.py                 # Main application entry point
+│   ├── routes/                # API route blueprints
+│   │   ├── qabalah.py        # Qabalah endpoints
+│   │   ├── astrology.py      # Astrology endpoints
+│   │   └── rituals.py        # Rituals endpoints
+│   ├── schema.sql            # Database schema
+│   └── requirements.txt      # Python dependencies
+├── data/                      # Seed data and correspondences
+│   ├── seed_qabalah.py       # Tree of Life data
+│   ├── seed_astrology.py     # Planets and zodiac data
+│   ├── seed_rituals.py       # Ritual instructions
+│   ├── card_correspondences.py # Tarot correspondences
+│   ├── system_descriptions.py  # Multi-system interpretations
+│   └── tarot_data.json       # Base tarot card data
+├── scripts/                   # Utility scripts
+│   └── migrate_to_sqlite.py  # Database initialization
+├── frontend/                  # SvelteKit web interface
+│   ├── src/
+│   │   ├── routes/           # Page components
+│   │   ├── lib/              # Shared utilities and components
+│   │   └── app.css           # Global styles
+│   └── package.json
+├── esoteric_knowledge.db      # SQLite database
 └── README.md                  # This file
 ```
 
@@ -430,12 +485,23 @@ TarotAPI/
 
 ## Contributing
 
-Contributions welcome! Priority areas:
-- Complete system descriptions for all 78 cards
-- Additional ritual traditions (Thelema, Chaos Magic, etc.)
-- Lunar mansions data
-- Enhanced cross-reference queries
-- Frontend examples
+Contributions welcome! We're building a comprehensive resource for students of the Western Hermetic Tradition.
+
+### Priority Areas:
+- Complete system descriptions for all 78 tarot cards
+- Additional ritual traditions (Thelema, Enochian, Elemental Magic)
+- Lunar mansions (28 mansions) data and correspondences
+- Enhanced cross-reference queries and API endpoints
+- Educational content and lesson modules
+- Interactive visualizations (Tree of Life, astrological charts)
+- Mobile-responsive UI improvements
+
+### Guidelines:
+- Maintain historical accuracy and cite traditional sources
+- Follow the existing code structure and patterns
+- Include comprehensive documentation
+- Test API endpoints thoroughly
+- Ensure frontend changes are responsive across devices
 
 ## License
 
@@ -443,26 +509,43 @@ MIT
 
 ## Version History
 
-### v3.0.0 (Current)
-- **MAJOR EXPANSION**: Renamed to Esoteric Knowledge API
-- Added complete Hermetic Qabalah system (10 Sephiroth, 22 Paths)
+### v3.1.0 (Current) - Project Emerald
+- **REBRANDING**: Renamed from TarotAPI to Project Emerald to reflect expanded scope
+- **RESTRUCTURED**: Improved separation of concerns
+  - `backend/` - Flask API and routes
+  - `data/` - Seed files and correspondences
+  - `scripts/` - Utility scripts
+  - `frontend/` - SvelteKit web interface
+- **ENHANCED**: Updated documentation to emphasize Hermetic tradition context
+- Interactive lesson system for structured learning
+- Visual Tree of Life representation
+- Expanded hermetic philosophy overview
+
+### v3.0.0
+- **MAJOR EXPANSION**: Grew beyond tarot to full esoteric knowledge system
+- Added complete Hermetic Qabalah (10 Sephiroth, 22 Paths)
 - Added Western Astrology (7 Planets, 12 Zodiac Signs)
-- Added 7 Golden Dawn rituals with full instructions
+- Added 7 Golden Dawn rituals with complete instructions
 - New blueprint-based architecture for routes
-- Cross-reference endpoint linking all systems
+- Cross-reference endpoints linking all systems
 - Renamed database from `tarot.db` to `esoteric_knowledge.db`
 - 30+ new API endpoints across Qabalah, Astrology, and Rituals
 
 ### v2.0.0
 - Migrated from JSON to SQLite database
-- Added comprehensive Qabalah correspondences to cards
+- Added comprehensive Qabalah correspondences to tarot cards
 - Added multi-system descriptions (RWS, Thoth, Golden Dawn, Marseille)
-- Enhanced search and filtering
+- Enhanced search and filtering capabilities
 
 ### v1.0.0
-- Initial release with JSON-based tarot data
-- Basic REST endpoints for cards
+- Initial release as TarotAPI
+- JSON-based tarot card data
+- Basic REST endpoints for card queries
 
 ---
 
-**Note**: This is a living API focused on traditional Western esoteric systems. While rooted in historical sources, it's designed for study, education, and practical application in modern esoteric practice.
+## Philosophy
+
+Project Emerald is designed as a living educational resource for the Western Hermetic Tradition. While deeply rooted in historical sources and traditional teachings, it serves modern students seeking to understand the interconnected nature of esoteric correspondences. This is not merely an API—it's a gateway to the mysteries, presented with academic rigor and practical applicability.
+
+**"As above, so below; as within, so without."** — The Emerald Tablet

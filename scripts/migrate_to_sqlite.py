@@ -1,35 +1,43 @@
 #!/usr/bin/env python3
 """
-Migration Script: JSON to SQLite
-Converts tarot_data.json to a comprehensive SQLite database with esoteric correspondences
-and descriptions from multiple tarot systems (RWS, Thoth, Golden Dawn, Marseille)
+Project Emerald - Database Migration Script
+Converts tarot_data.json to a comprehensive SQLite database with esoteric correspondences,
+Qabalah, astrology, and ritual data from multiple traditional systems
+(RWS, Thoth, Golden Dawn, Marseille)
 """
 
 import json
 import sqlite3
 import os
+import sys
 from datetime import datetime
-from card_correspondences import (
+
+# Add parent directory to path to import from data module
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from data.card_correspondences import (
     MAJOR_ARCANA_CORRESPONDENCES,
     SUIT_CORRESPONDENCES,
     COURT_CARDS,
     PIP_CORRESPONDENCES
 )
-from system_descriptions import (
+from data.system_descriptions import (
     RWS_DESCRIPTIONS,
     THOTH_DESCRIPTIONS,
     GOLDEN_DAWN_DESCRIPTIONS,
     MARSEILLE_DESCRIPTIONS
 )
-from seed_qabalah import seed_sephiroth, seed_paths
-from seed_astrology import seed_planets, seed_zodiac_signs
-from seed_rituals import seed_rituals
+from data.seed_qabalah import seed_sephiroth, seed_paths
+from data.seed_astrology import seed_planets, seed_zodiac_signs
+from data.seed_rituals import seed_rituals
 
 
 class TarotDatabaseMigration:
-    def __init__(self, json_file='tarot_data.json', db_file='esoteric_knowledge.db'):
-        self.json_file = json_file
-        self.db_file = db_file
+    def __init__(self, json_file=None, db_file=None):
+        # Default paths relative to project root
+        project_root = os.path.join(os.path.dirname(__file__), '..')
+        self.json_file = json_file or os.path.join(project_root, 'data', 'tarot_data.json')
+        self.db_file = db_file or os.path.join(project_root, 'esoteric_knowledge.db')
         self.conn = None
         self.cursor = None
 
@@ -48,7 +56,8 @@ class TarotDatabaseMigration:
 
     def create_schema(self):
         """Create database schema from schema.sql"""
-        with open('schema.sql', 'r') as f:
+        schema_path = os.path.join(os.path.dirname(__file__), '..', 'backend', 'schema.sql')
+        with open(schema_path, 'r') as f:
             schema_sql = f.read()
 
         # Execute schema (split by semicolons for multiple statements)

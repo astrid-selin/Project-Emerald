@@ -1,6 +1,6 @@
-# Emerald Frontend
+# Project Emerald - Frontend
 
-A modern SvelteKit frontend for the Emerald esoteric education platform, teaching Tarot, Qabalah, and Astrology through structured curriculum.
+A modern, interactive web interface for exploring the Western Hermetic Tradition. Built with SvelteKit 5, this frontend provides an elegant, educational experience for studying Tarot, Qabalah, Astrology, and ceremonial rituals through structured lessons and interconnected correspondences.
 
 ## Tech Stack
 
@@ -44,10 +44,12 @@ Make sure the Flask backend API is running on port 5000:
 
 ```bash
 cd ..
-python app.py
+python backend/app.py
 ```
 
 The frontend expects the API to be available at `http://localhost:5000`.
+
+> **Note**: See the main `README.md` in the project root for complete backend setup instructions.
 
 ## Project Structure
 
@@ -135,30 +137,49 @@ npm run preview
 
 ### Current Features
 
-- ✅ View all 78 tarot cards in a responsive grid
-- ✅ Card filtering by arcana, suit, and element
-- ✅ Clean, modern design with Emerald color palette
-- ✅ Responsive layout (mobile, tablet, desktop)
-- ✅ Loading and error states
-- ✅ TypeScript type safety
+- ✅ Interactive tarot card grid with all 78 cards
+- ✅ Detailed card pages with full correspondences
+- ✅ Visual Tree of Life with interactive SVG
+- ✅ Structured lesson system with quizzes
+- ✅ Qabalah explorer for Sephiroth and Paths
+- ✅ Clean, academic design with Emerald color palette
+- ✅ Fully responsive layout (mobile, tablet, desktop)
+- ✅ TypeScript type safety throughout
+- ✅ Comprehensive error handling and loading states
 
-### Upcoming Features
+### In Development
 
-- 🔜 Individual card detail pages
-- 🔜 Full correspondence display (Qabalah, Astrology)
-- 🔜 Search and advanced filtering
+- 🔜 Astrology section (planets, zodiac signs)
+- 🔜 Ritual library with step-by-step guides
+- 🔜 Advanced search across all systems
 - 🔜 Daily card draw feature
-- 🔜 Learning modules and curriculum
-- 🔜 User authentication and progress tracking
+- 🔜 Progress tracking and bookmarks
+- 🔜 User authentication
+- 🔜 Interactive astrological charts
+- 🔜 Grimoire builder for personal notes
 
 ## Development Guidelines
 
+### Code Standards
 - Use TypeScript for all new code
-- Follow the existing component structure
-- Maintain responsive design principles
-- Keep the design clean and modern (not witchy/mystical)
-- Use generous whitespace
-- Test on multiple screen sizes
+- Follow the existing component structure and patterns
+- Implement proper error handling and loading states
+- Write semantic, accessible HTML
+- Use TypeScript interfaces from `lib/types.ts`
+
+### Design Principles
+- Maintain clean, academic aesthetic (not overly mystical)
+- Use the Emerald color palette consistently
+- Ensure generous whitespace and readability
+- Design mobile-first, then enhance for larger screens
+- Keep navigation intuitive and discoverable
+- Balance beauty with functionality
+
+### Testing
+- Test on multiple screen sizes (mobile, tablet, desktop)
+- Verify API integration with backend
+- Check loading states and error handling
+- Ensure TypeScript compilation succeeds
 
 ## Troubleshooting
 
@@ -181,6 +202,27 @@ If port 5173 is already in use, Vite will automatically use the next available p
 - [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 
+## Architecture Notes
+
+### State Management
+Currently using Svelte 5's built-in reactivity with runes (`$state`, `$derived`). For complex state, consider:
+- Local component state for UI concerns
+- API calls in `+page.ts` load functions for data
+- Shared state via stores if needed in future
+
+### API Integration
+The `lib/api.ts` module provides typed API client functions. All backend communication goes through this centralized module, making it easy to:
+- Add authentication headers in the future
+- Handle errors consistently
+- Type-check API responses
+
+### Routing
+SvelteKit file-based routing:
+- `/routes/+page.svelte` - Home page
+- `/routes/cards/[id]/+page.svelte` - Dynamic card details
+- `/routes/qabalah/+page.svelte` - Tree of Life explorer
+- `/routes/learn/[lessonId]/+page.svelte` - Lesson system
+
 ## License
 
-Part of the Emerald esoteric education platform.
+MIT - Part of Project Emerald

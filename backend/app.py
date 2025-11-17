@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Esoteric Knowledge API - A comprehensive REST API for esoteric studies
+Project Emerald - Backend API
+A comprehensive REST API for exploring the Western Hermetic Tradition
 Includes Tarot, Qabalah, Astrology, and Ritual practices
 """
 
@@ -17,7 +18,8 @@ from routes.rituals import rituals_bp
 app = Flask(__name__)
 
 # Database configuration
-DATABASE = 'esoteric_knowledge.db'
+# Database is stored in the parent directory
+DATABASE = os.path.join(os.path.dirname(__file__), '..', 'esoteric_knowledge.db')
 app.config['DATABASE'] = DATABASE
 
 
@@ -128,9 +130,9 @@ def get_card_with_details(card_id=None, card_number=None, card_name=None, includ
 def home():
     """Home endpoint with API documentation"""
     return jsonify({
-        'message': 'Welcome to the Esoteric Knowledge API',
-        'description': 'A comprehensive REST API for esoteric studies including Tarot, Qabalah, Astrology, and Ritual practices',
-        'version': '3.0.0',
+        'message': 'Welcome to Project Emerald',
+        'description': 'A comprehensive platform for exploring the Western Hermetic Tradition, including Tarot, Qabalah, Astrology, and ceremonial ritual practices',
+        'version': '3.1.0',
         'features': [
             'Complete 78-card tarot deck with multiple system descriptions',
             'Tree of Life: 10 Sephiroth and 22 Paths',
