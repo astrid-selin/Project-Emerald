@@ -7,6 +7,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import CardSelector from '$lib/components/CardSelector.svelte';
+	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
 
 	// Form state
 	let title = $state('');
@@ -95,6 +96,7 @@
 	}
 </script>
 
+<ProtectedRoute>
 <div class="max-w-3xl mx-auto">
 	<!-- Page Header -->
 	<div class="mb-8">
@@ -251,3 +253,4 @@
 		</form>
 	</Card>
 </div>
+</ProtectedRoute>

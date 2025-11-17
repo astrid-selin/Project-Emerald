@@ -168,3 +168,17 @@ export interface MoonPhase {
 	illumination: number; // 0-100
 	emoji: string;
 }
+
+// User Profile Interface
+export interface UserProfile {
+	uid: string;
+	email: string;
+	display_name?: string;
+	created_at: string;
+	tier: 'free' | 'paid';
+	subscription_status?: 'active' | 'canceled' | 'past_due';
+	lessons_completed: string[];
+	current_grade: string;
+	streak_days: number;
+	last_activity: string;
+}
