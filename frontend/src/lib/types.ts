@@ -64,6 +64,33 @@ export interface Sephirah {
 	vice: string;
 }
 
+// Path Interface (22 Paths on Tree of Life)
+export interface Path {
+	number: number;
+	hebrew_letter: string;
+	hebrew_letter_meaning: string;
+	connects_from: number;
+	connects_to: number;
+	card_number?: number;
+	card_name?: string;
+	from_sephirah_name?: string;
+	to_sephirah_name?: string;
+}
+
+// Tree of Life Response
+export interface TreeOfLife {
+	name: string;
+	description: string;
+	sephiroth: {
+		count: number;
+		spheres: Sephirah[];
+	};
+	paths: {
+		count: number;
+		connections: Path[];
+	};
+}
+
 // Card Detail Response with Full Correspondences
 export interface CardDetailWithCorrespondences {
 	card: Card;
