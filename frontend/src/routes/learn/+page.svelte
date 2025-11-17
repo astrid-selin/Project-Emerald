@@ -5,17 +5,13 @@
 	import Badge from '$lib/components/Badge.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
+	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import { userProfile } from '$lib/stores/userProfile';
 
 	let lessons = $state<Lesson[]>(mockLessons);
-	let completedLessons = $state<string[]>([]);
 
-	// Load completed lessons from localStorage
-	$effect(() => {
-		if (typeof window !== 'undefined') {
-			const stored = localStorage.getItem('completed_lessons');
-			completedLessons = stored ? JSON.parse(stored) : [];
-		}
-	});
+	// Get completed lessons from user profile
+	let completedLessons = $derived($userProfile?.lessons_completed || []);
 
 	function isLessonLocked(lesson: Lesson): boolean {
 		// First lesson is always unlocked
@@ -45,27 +41,11 @@
 
 	<!-- Progress Overview -->
 	<Card padding="md" border="emerald" background="cream">
-		<div class="flex items-center justify-between">
-			<div>
-				<h3 class="text-xl font-bold text-charcoal mb-1">Your Progress</h3>
-				<p class="text-charcoal/70">
-					{completedLessons.length} of {lessons.length} lessons completed
-				</p>
-			</div>
-			<div class="text-right">
-				<div class="text-3xl font-bold text-emerald">
-					{Math.round((completedLessons.length / lessons.length) * 100)}%
-				</div>
-				<p class="text-sm text-charcoal/70">Complete</p>
-			</div>
+		<div class="mb-4">
+			<h3 class="text-xl font-bold text-charcoal mb-1">Your Progress</h3>
+			<p class="text-charcoal/70">Keep learning to advance through the grades</p>
 		</div>
-		<!-- Progress Bar -->
-		<div class="mt-4 bg-charcoal/10 rounded-full h-2 overflow-hidden">
-			<div
-				class="bg-emerald h-full transition-all duration-500"
-				style="width: {(completedLessons.length / lessons.length) * 100}%"
-			></div>
-		</div>
+		<ProgressBar completed={completedLessons.length} total={lessons.length} showLabel={true} />
 	</Card>
 
 	<!-- Lessons List -->

@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import Card from '$lib/components/Card.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { migrateAllData } from '$lib/utils/migrate';
 
 	let email = $state('');
 	let password = $state('');
@@ -29,7 +30,11 @@
 		loading = true;
 
 		try {
-			await authStore.signInWithEmail(email, password);
+			const user = await authStore.signInWithEmail(email, password);
+			// Migrate localStorage data to Firestore
+			if (user) {
+				await migrateAllData(user.uid);
+			}
 			goto('/');
 		} catch (error: any) {
 			errorMessage = formatFirebaseError(error.message);
@@ -43,7 +48,11 @@
 		loading = true;
 
 		try {
-			await authStore.signInWithGoogle();
+			const user = await authStore.signInWithGoogle();
+			// Migrate localStorage data to Firestore
+			if (user) {
+				await migrateAllData(user.uid);
+			}
 			goto('/');
 		} catch (error: any) {
 			errorMessage = formatFirebaseError(error.message);

@@ -3,10 +3,16 @@
 	import type { Lesson } from '$lib/types';
 	import LessonNav from '$lib/components/LessonNav.svelte';
 	import ProtectedRoute from '$lib/components/ProtectedRoute.svelte';
+	import Card from '$lib/components/Card.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { userProfile } from '$lib/stores/userProfile';
 
 	let { data } = $props();
 	let lesson: Lesson = $derived(data.lesson);
 	let allLessons: Lesson[] = $derived(data.allLessons);
+
+	// Check if user has access to this lesson
+	let hasAccess = $derived(lesson.is_free || $userProfile?.tier === 'paid');
 
 	// Quiz state
 	let selectedAnswers = $state<number[]>([]);
@@ -14,27 +20,22 @@
 	let quizPassed = $state(false);
 	let showMeditation = $state(false);
 
-	// Load completion state
-	let completedLessons = $state<string[]>([]);
+	// Get completed lessons from user profile
+	let completedLessons = $derived($userProfile?.lessons_completed || []);
 
 	$effect(() => {
-		if (typeof window !== 'undefined') {
-			const stored = localStorage.getItem('completed_lessons');
-			completedLessons = stored ? JSON.parse(stored) : [];
-
-			// Reset quiz state when lesson changes
-			selectedAnswers = new Array(lesson.quiz.length).fill(-1);
-			submitted = false;
-			quizPassed = false;
-			showMeditation = false;
-		}
+		// Reset quiz state when lesson changes
+		selectedAnswers = new Array(lesson.quiz.length).fill(-1);
+		submitted = false;
+		quizPassed = false;
+		showMeditation = false;
 	});
 
 	function selectAnswer(questionIndex: number, answerIndex: number) {
 		selectedAnswers[questionIndex] = answerIndex;
 	}
 
-	function submitQuiz() {
+	async function submitQuiz() {
 		submitted = true;
 
 		// Check if all answers are correct
@@ -42,16 +43,15 @@
 
 		if (allCorrect) {
 			quizPassed = true;
-			completeLesson(lesson.id);
+			await completeLesson(lesson.id);
 		} else {
 			quizPassed = false;
 		}
 	}
 
-	function completeLesson(lessonId: string) {
+	async function completeLesson(lessonId: string) {
 		if (!completedLessons.includes(lessonId)) {
-			completedLessons = [...completedLessons, lessonId];
-			localStorage.setItem('completed_lessons', JSON.stringify(completedLessons));
+			await userProfile.completeLesson(lessonId);
 		}
 	}
 
@@ -114,17 +114,77 @@
 		</div>
 	</div>
 
-	<!-- Theory Section -->
-	<section class="mb-8">
-		<h2 class="text-2xl font-bold text-gold mb-4">Theory</h2>
-		<div
-			class="prose prose-lg max-w-none bg-white rounded-lg shadow-md p-8 border border-charcoal/10"
-		>
-			<div class="text-charcoal/90 leading-relaxed text-lg">
-				{@html formatText(lesson.content.theory)}
+	<!-- Paywall or Lesson Content -->
+	{#if !hasAccess}
+		<!-- Paywall -->
+		<section class="mb-8">
+			<Card padding="lg" border="emerald">
+				<div class="text-center">
+					<div class="mb-4">
+						<svg class="w-16 h-16 text-gold mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+						</svg>
+					</div>
+					<h2 class="text-3xl font-bold text-gold mb-4">Premium Lesson</h2>
+					<p class="text-lg text-charcoal mb-4">This lesson is part of the premium curriculum.</p>
+					<p class="text-charcoal/70 mb-6">
+						Upgrade to access all lessons and progress through the Tree of Life.
+					</p>
+
+					<div class="bg-cream p-6 rounded-lg mb-6 text-left max-w-md mx-auto">
+						<h3 class="font-bold text-charcoal mb-3">Premium includes:</h3>
+						<ul class="space-y-2 text-charcoal/80">
+							<li class="flex items-start gap-2">
+								<svg class="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+								<span>Complete curriculum (250+ lessons)</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<svg class="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+								<span>Progress through all Golden Dawn grades</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<svg class="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+								<span>Unlimited journal entries</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<svg class="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+								<span>Pattern tracking</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<svg class="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+								<span>Cross-device sync</span>
+							</li>
+						</ul>
+					</div>
+
+					<Button variant="primary" size="lg" href="/pricing">
+						Upgrade to Premium - $8/month
+					</Button>
+				</div>
+			</Card>
+		</section>
+	{:else}
+		<!-- Theory Section -->
+		<section class="mb-8">
+			<h2 class="text-2xl font-bold text-gold mb-4">Theory</h2>
+			<div
+				class="prose prose-lg max-w-none bg-white rounded-lg shadow-md p-8 border border-charcoal/10"
+			>
+				<div class="text-charcoal/90 leading-relaxed text-lg">
+					{@html formatText(lesson.content.theory)}
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
 	<!-- Practice Section -->
 	<section class="mb-8">
@@ -376,6 +436,7 @@
 	<LessonNav currentLessonId={lesson.id} {allLessons} {completedLessons} />
 
 	<!-- Next Lesson Button (shown only after passing quiz) -->
+	{#if hasAccess}
 	{#if quizPassed}
 		{@const nextLesson = allLessons.find((l) => l.order === lesson.order + 1)}
 		{#if nextLesson}
@@ -395,6 +456,8 @@
 				</p>
 			</div>
 		{/if}
+	{/if}
+	{/if}
 	{/if}
 </div>
 </ProtectedRoute>
