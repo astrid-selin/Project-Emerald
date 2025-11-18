@@ -25,6 +25,7 @@
 		"vite": "^7.1.10"
 	},
 	"dependencies": {
-		"firebase": "^12.6.0"
+		"firebase": "^12.6.0",
+		"stripe": "^19.3.1"
 	}
 }
