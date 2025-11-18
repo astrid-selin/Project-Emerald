@@ -1,21 +1,48 @@
-// Stripe integration placeholder
-// This will be implemented properly with Stripe later
-
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import Stripe from 'stripe';
+import { STRIPE_SECRET_KEY, STRIPE_PRICE_ID, VITE_PUBLIC_URL } from '$env/static/private';
+
+// Initialize Stripe with the secret key
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+	apiVersion: '2024-12-18.acacia'
+});
 
 export const POST: RequestHandler = async ({ request }) => {
-	// TODO: Implement Stripe checkout session creation
-	// 1. Import Stripe SDK
-	// 2. Create checkout session with pricing
-	// 3. Return session URL
-	// 4. Handle webhook for successful payment
+	try {
+		const { userId } = await request.json();
 
-	return json(
-		{
-			error: 'Stripe integration coming soon',
-			message: 'Payment processing is not yet implemented. Use the /admin page to toggle premium for testing.'
-		},
-		{ status: 501 }
-	);
+		if (!userId) {
+			return json({ error: 'User ID is required' }, { status: 400 });
+		}
+
+		// Create a Stripe checkout session
+		const session = await stripe.checkout.sessions.create({
+			mode: 'subscription',
+			payment_method_types: ['card'],
+			line_items: [
+				{
+					price: STRIPE_PRICE_ID,
+					quantity: 1
+				}
+			],
+			success_url: `${VITE_PUBLIC_URL}/premium/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${VITE_PUBLIC_URL}/premium/cancel`,
+			metadata: {
+				userId
+			},
+			client_reference_id: userId
+		});
+
+		return json({ url: session.url });
+	} catch (error) {
+		console.error('Error creating checkout session:', error);
+		return json(
+			{
+				error: 'Failed to create checkout session',
+				message: error instanceof Error ? error.message : 'Unknown error'
+			},
+			{ status: 500 }
+		);
+	}
 };
